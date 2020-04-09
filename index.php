@@ -3,16 +3,23 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use \LINE\LINEBot\SignatureValidator as SignatureValidator;
+use \LINE\LINEBot\HTTPClient\CurlHTTPClient;
+use \LINE\LINEBot;
+use \LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+use \Slim\App;
+use \Dotenv\Dotenv;
+
+require_once "api/CovidIndonesia.php";
 
 // load config
-$dotenv = new Dotenv\Dotenv(__DIR__);
+$dotenv = new Dotenv(__DIR__);
 $dotenv->load();
 
 // initiate app
 $configs =  [
 	'settings' => ['displayErrorDetails' => true],
 ];
-$app = new Slim\App($configs);
+$app = new App($configs);
 
 /* ROUTES */
 $app->get('/', function ($request, $response) {
@@ -34,40 +41,40 @@ $app->post('/', function ($request, $response)
 	}
 
 	// is this request comes from LINE?
-	if($_ENV['PASS_SIGNATURE'] == false && ! SignatureValidator::validateSignature($body, $_ENV['CHANNEL_SECRET'], $signature)){
+	if ($_ENV['PASS_SIGNATURE'] == false && ! SignatureValidator::validateSignature($body, $_ENV['CHANNEL_SECRET'], $signature)) {
 		return $response->withStatus(400, 'Invalid signature');
 	}
 
 	// init bot
-	$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($_ENV['CHANNEL_ACCESS_TOKEN']);
-	$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $_ENV['CHANNEL_SECRET']]);
+	$httpClient = new CurlHTTPClient($_ENV['CHANNEL_ACCESS_TOKEN']);
+	$bot = new LINEBot($httpClient, ['channelSecret' => $_ENV['CHANNEL_SECRET']]);
 	$data = json_decode($body, true);
 	foreach ($data['events'] as $event)
 	{
 		$userMessage = $event['message']['text'];
-		if(strtolower($userMessage) == 'halo')
-		{
-			$message = "Halo juga";
-            $textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message);
-			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
-			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
-		
+
+		switch (strtolower($userMessage)) {
+			case 'halo':
+				$message = "Halo juga";
+				break;
+			case 'info_covid_id':
+				$covidId = new CovidIndonesia();
+				$message = $covidId->getStatistikKasus();
+				break;
+			case 'help':
+				$message = '"halo" -> Respon halo' . PHP_EOL;
+				$message .= '"info_covid_id" -> Meminta statistik kasus COVID-19 di Indonesia';
+				break;
+			default:
+				$message = "Maaf perintah tidak diketahui";
+				break;
 		}
+
+		$textMessageBuilder = new TextMessageBuilder($message);
+		$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+		return $result->getHTTPStatus() . ' ' . $result->getRawBody();
 	}
-	
-
 });
-
-// $app->get('/push/{to}/{message}', function ($request, $response, $args)
-// {
-// 	$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($_ENV['CHANNEL_ACCESS_TOKEN']);
-// 	$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $_ENV['CHANNEL_SECRET']]);
-
-// 	$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($args['message']);
-// 	$result = $bot->pushMessage($args['to'], $textMessageBuilder);
-
-// 	return $result->getHTTPStatus() . ' ' . $result->getRawBody();
-// });
 
 /* JUST RUN IT */
 $app->run();
