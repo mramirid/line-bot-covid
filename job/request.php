@@ -8,10 +8,12 @@ date_default_timezone_set('Asia/Jakarta');
 
 /* ---------------------- Data Nasional ---------------------- */
 
+// Ambil data terakhir di tabel nasional
 $querySelectLastData = "SELECT * FROM nasional WHERE DATE(created_at) = CURDATE() LIMIT 1";
 $resultQuery         = mysqli_query($link, $querySelectLastData);
 $resultLastDataId    = (object) mysqli_fetch_assoc($resultQuery);
 
+// Ambil informasi kasus di Indonesia
 $covidId = new CovidIndonesia();
 $dataApiNasional = $covidId->fetchUpdateStatistik();
 
@@ -37,16 +39,16 @@ else :
     endif;
 endif;
 
-exit;
-
 /* ---------------------- End of Data Nasional ---------------------- */
 
 /* ---------------------- Data Internasinal ---------------------- */
 
+// Ambil data terakhir di tabel internasional
 $querySelectLastData = "SELECT * FROM internasional WHERE DATE(created_at) = CURDATE() LIMIT 1";
 $resultQuery         = mysqli_query($link, $querySelectLastData);
 $resultLastDataWorld = (object) mysqli_fetch_assoc($resultQuery);
 
+// Ambil informasi kasus di seluruh dunia
 $covidInternational   = new CovidInternasional();
 $dataApiInternasional = $covidInternational->fetchUpdateStatistik();
 
