@@ -59,7 +59,7 @@ $app->post('/', function ($request, $response)
 				break;
 			case 'info_covid_id':
 				$covidId = new CovidIndonesia();
-				$message = $covidId->getStatistikKasus();
+				$message = $covidId->getStatistikKasusForMessage();
 				break;
 			case 'help':
 				$message = '"halo" -> Respon halo' . PHP_EOL;

@@ -4,7 +4,7 @@ class CovidIndonesia
 {
     private $endpoint = "https://api.kawalcorona.com/indonesia/";
 
-    public function getStatistikKasus()
+    public function getStatistikKasusForMessage()
     {
         $response = json_decode(file_get_contents($this->endpoint))[0];
 
@@ -14,6 +14,17 @@ class CovidIndonesia
         $message .= 'Total meninggal: ' . str_replace(',', '', $response->meninggal);
 
         return $message;
+    }
+
+    public function fetchUpdateStatistik()
+    {
+        $response = json_decode(file_get_contents($this->endpoint))[0];
+
+        return [
+            'positif'   => (int) str_replace(',', '', $response->positif),
+            'sembuh'    => (int) str_replace(',', '', $response->sembuh),
+            'meninggal' => (int) str_replace(',', '', $response->meninggal)
+        ];
     }
 }
 
