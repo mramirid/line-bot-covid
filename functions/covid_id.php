@@ -22,6 +22,9 @@ function getStatistikKasusForMessage()
 
 /* ------------- Keperluan request Cron Job ------------- */
 
+/**
+ * Fungsi ini mengambil data statistik terakhir dari API
+ */
 function fetchUpdateStatistik()
 {
     $response = json_decode(file_get_contents('https://api.kawalcorona.com/indonesia/'))[0];
@@ -33,6 +36,9 @@ function fetchUpdateStatistik()
     ];
 }
 
+/**
+ * Fungsi ini mengambil data statistik terakhir (hari ini) dari database
+ */
 function getTodayData()
 {
     global $connection;
@@ -43,6 +49,12 @@ function getTodayData()
     return (object) mysqli_fetch_assoc($resultQuery);
 }
 
+/**
+ * Fungsi ini memasukan data baru ke dalam database
+ * Dieksekusi ketika hari sudah berganti
+ * 
+ * Param 1: data terbaru dari API
+ */
 function insertNewRowToday($dataApiNasional)
 {
     global $connection;
@@ -54,6 +66,13 @@ function insertNewRowToday($dataApiNasional)
     mysqli_query($connection, $queryInsertIndonesia);
 }
 
+/**
+ * Fungsi ini mengupdate data hari ini yang tersimpan di database
+ * Dieksekusi ketika ada perubahan dari API
+ * 
+ * Param 1: row yang akan diupdate
+ * Param 2: data terbaru dari API
+ */
 function updateTodayData($id, $dataApiNasional)
 {
     global $connection;
@@ -66,6 +85,7 @@ function updateTodayData($id, $dataApiNasional)
                                 dalam_perawatan = $dalamPerawatan,
                                 updated_at      = CURRENT_TIMESTAMP()
                             WHERE id = $id";
+                            
     mysqli_query($connection, $queryUpdateLastData);
 }
 
