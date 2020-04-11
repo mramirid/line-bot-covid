@@ -61,7 +61,7 @@ $app->post('/', function ($request, $response)
 				break;
 			case 'test':
 				require_once "./templates/flex_nasional.php";
-				$message = json_encode($flex);
+				$message = json_encode($flex, JSON_UNESCAPED_SLASHES);
 				break;
 			case 'help':
 				$message = '"halo" -> Respon halo' . PHP_EOL;

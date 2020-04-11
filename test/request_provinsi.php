@@ -1,5 +1,7 @@
 <?php
 
+exit;   // Pengaman
+
 require_once "../database/config.php";
 
 $response = json_decode(file_get_contents('https://api.kawalcorona.com/indonesia/provinsi/'));
