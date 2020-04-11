@@ -38,7 +38,6 @@ $dataApiProvinsi = CovidProv\fetchUpdateStatistik();
 if ($dataDBProvinsi->num_rows == 0) :
     CovidProv\insertNewDataToday($dataApiProvinsi);
 elseif (\CovidProv\isDBExpired($dataDBProvinsi, $dataApiProvinsi)) :
-    echo "EXPIRED";
     CovidProv\updateTodayData($dataApiProvinsi);
 endif;
 
