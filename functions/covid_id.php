@@ -70,7 +70,7 @@ function insertNewRowToday($dataApiNasional)
  * Fungsi ini mengupdate data hari ini yang tersimpan di database
  * Dieksekusi ketika ada perubahan dari API
  * 
- * Param 1: row yang akan diupdate
+ * Param 1: id row yang akan diupdate
  * Param 2: data terbaru dari API
  */
 function updateTodayData($id, $dataApiNasional)
