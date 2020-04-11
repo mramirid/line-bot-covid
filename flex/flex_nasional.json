@@ -1,168 +1,168 @@
 {
-    "type": "bubble",
-    "hero": {
-      "type": "image",
-      "url": "https://www.pngkit.com/png/detail/154-1541893_illustration-of-flag-of-indonesia-indonesia-flag-logo.png",
-      "size": "full",
-      "aspectRatio": "20:13",
-      "aspectMode": "cover",
-      "action": {
-        "type": "uri",
-        "uri": "http://linecorp.com/"
-      }
-    },
-    "body": {
-      "type": "box",
-      "layout": "vertical",
-      "contents": [
-        {
-          "type": "text",
-          "text": "Indonesia",
-          "weight": "bold",
-          "size": "xxl"
-        },
-        {
-          "type": "box",
-          "layout": "vertical",
-          "margin": "lg",
-          "spacing": "sm",
-          "contents": [
-            {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "sm",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "Terkonfirmasi",
-                  "color": "#aaaaaa",
-                  "size": "sm",
-                  "flex": 1,
-                  "maxLines": 50
-                },
-                {
-                  "type": "text",
-                  "text": "replace",
-                  "wrap": true,
-                  "color": "#666666",
-                  "size": "sm",
-                  "flex": 5
-                }
-              ]
-            },
-            {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "sm",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "Dirawat",
-                  "color": "#aaaaaa",
-                  "size": "sm",
-                  "flex": 1,
-                  "maxLines": 50
-                },
-                {
-                  "type": "text",
-                  "text": "replace",
-                  "wrap": true,
-                  "color": "#666666",
-                  "size": "sm",
-                  "flex": 5
-                }
-              ]
-            },
-            {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "sm",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "Sembuh",
-                  "color": "#aaaaaa",
-                  "size": "sm",
-                  "flex": 1,
-                  "maxLines": 50
-                },
-                {
-                  "type": "text",
-                  "text": "replace",
-                  "wrap": true,
-                  "color": "#666666",
-                  "size": "sm",
-                  "flex": 5
-                }
-              ]
-            },
-            {
-              "type": "box",
-              "layout": "baseline",
-              "spacing": "sm",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "Meninggal",
-                  "color": "#aaaaaa",
-                  "size": "sm",
-                  "flex": 1,
-                  "maxLines": 50
-                },
-                {
-                  "type": "text",
-                  "text": "replace",
-                  "wrap": true,
-                  "color": "#666666",
-                  "size": "sm",
-                  "flex": 5
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "footer": {
-      "type": "box",
-      "layout": "vertical",
-      "spacing": "sm",
-      "contents": [
-        {
-          "type": "button",
-          "style": "link",
-          "height": "sm",
-          "action": {
-            "type": "message",
-            "label": "KASUS PROVINSI",
-            "text": "Data Provinsi"
-          }
-        },
-        {
-          "type": "button",
-          "style": "link",
-          "height": "sm",
-          "action": {
-            "type": "message",
-            "label": "CARI",
-            "text": "Tulis dengan format berikut: Cari:Nama Provinsi"
-          }
-        },
-        {
-          "type": "button",
-          "style": "link",
-          "height": "sm",
-          "action": {
-            "type": "message",
-            "label": "HELP",
-            "text": "Isi Disini"
-          }
-        },
-        {
-          "type": "spacer",
-          "size": "sm"
-        }
-      ],
-      "flex": 0
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "https://www.pngkit.com/png/detail/154-1541893_illustration-of-flag-of-indonesia-indonesia-flag-logo.png",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "action": {
+      "type": "uri",
+      "uri": "http://linecorp.com/"
     }
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Indonesia",
+        "weight": "bold",
+        "size": "xxl"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "lg",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Terkonfirmasi",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 3,
+                "maxLines": 50
+              },
+              {
+                "type": "text",
+                "text": "replace",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 5
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Dirawat",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 3,
+                "maxLines": 50
+              },
+              {
+                "type": "text",
+                "text": "replace",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 5
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Sembuh",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 3,
+                "maxLines": 50
+              },
+              {
+                "type": "text",
+                "text": "replace",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 5
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Meninggal",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 3,
+                "maxLines": 50
+              },
+              {
+                "type": "text",
+                "text": "replace",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "style": "link",
+        "height": "sm",
+        "action": {
+          "type": "message",
+          "label": "KASUS PROVINSI",
+          "text": "Data Provinsi"
+        }
+      },
+      {
+        "type": "button",
+        "style": "link",
+        "height": "sm",
+        "action": {
+          "type": "message",
+          "label": "CARI",
+          "text": "Tulis dengan format berikut: Cari:Nama Provinsi"
+        }
+      },
+      {
+        "type": "button",
+        "style": "link",
+        "height": "sm",
+        "action": {
+          "type": "message",
+          "label": "HELP",
+          "text": "Isi Disini"
+        }
+      },
+      {
+        "type": "spacer",
+        "size": "sm"
+      }
+    ],
+    "flex": 0
   }
+}
