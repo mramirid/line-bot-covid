@@ -61,6 +61,10 @@ $app->post('/', function ($request, $response)
 				$covidId = new CovidIndonesia();
 				$message = $covidId->getStatistikKasusForMessage();
 				break;
+			case 'test':
+				require_once "./flex/flex_nasional.php";
+				$message = json_encode($flex);
+				break;
 			case 'help':
 				$message = '"halo" -> Respon halo' . PHP_EOL;
 				$message .= '"info_covid_id" -> Meminta statistik kasus COVID-19 di Indonesia';
