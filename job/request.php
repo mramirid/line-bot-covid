@@ -10,7 +10,7 @@ date_default_timezone_set('Asia/Jakarta');
 // Ambil data terakhir di tabel nasional
 $resultLastDataId    = CovidID\getTodayData();
 
-// Ambil informasi kasus di Indonesia
+// Ambil statistik kasus di Indonesia
 $dataApiNasional = CovidID\fetchUpdateStatistik();
 
 if (!(array) $resultLastDataId) :
@@ -29,6 +29,17 @@ endif;
 
 /* ---------------------- Data Provinsi ---------------------- */
 
+// Ambil data terakhir di tabel pengambilan_provinsi & detail_penambilang_provinsi
+$dataDBProvinsi = CovidProv\getTodayData();
 
+// Ambil statistik kasus di tiap provinsi
+$dataApiProvinsi = CovidProv\fetchUpdateStatistik();
+
+if ($dataDBProvinsi->num_rows == 0) :
+    CovidProv\insertNewDataToday($dataApiProvinsi);
+elseif (\CovidProv\isDBExpired($dataDBProvinsi, $dataApiProvinsi)) :
+    echo "EXPIRED";
+    CovidProv\updateTodayData($dataApiProvinsi);
+endif;
 
 /* ---------------------- End of Data Provinsi ---------------------- */
