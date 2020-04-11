@@ -2,8 +2,6 @@
 
 namespace CovidProv;
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-
 require_once "../database/config.php";
 
 /* ------------- Keperluan request Cron Job ------------- */
