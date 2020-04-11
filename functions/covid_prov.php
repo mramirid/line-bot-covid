@@ -98,6 +98,12 @@ function insertNewDataToday($dataApiProvinsi)
     }
 }
 
+/**
+ * Fungsi ini mengecek apakah data di database sama barunya dengan yang di API
+ * 
+ * Param 1: List data provinsi dari database (result object)
+ * Param 2: List data provinsi dari API
+ */
 function isDBExpired($dataDBProvinsi, $dataApiProvinsi)
 {
     $i = 0;
