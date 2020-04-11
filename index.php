@@ -9,8 +9,6 @@ use \LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use \Slim\App;
 use \Dotenv\Dotenv;
 
-require_once "api/CovidIndonesia.php";
-
 // load config
 $dotenv = new Dotenv(__DIR__);
 $dotenv->load();
@@ -58,11 +56,11 @@ $app->post('/', function ($request, $response)
 				$message = "Halo juga";
 				break;
 			case 'info_covid_id':
-				$covidId = new CovidIndonesia();
-				$message = $covidId->getStatistikKasusForMessage();
+				// $covidId = new CovidIndonesia();
+				// $message = $covidId->getStatistikKasusForMessage();
 				break;
 			case 'test':
-				require_once "./flex/flex_nasional.php";
+				require_once "./templates/flex_nasional.php";
 				$message = json_encode($flex);
 				break;
 			case 'help':
