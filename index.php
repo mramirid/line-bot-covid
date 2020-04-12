@@ -56,8 +56,7 @@ $app->post('/', function ($request, $response)
 				$message = "Halo juga";
 				break;
 			case 'info_covid_id':
-				// $covidId = new CovidIndonesia();
-				// $message = $covidId->getStatistikKasusForMessage();
+				$message = "info";
 				break;
 			case 'test':
 				require_once "./templates/flex_nasional.php";

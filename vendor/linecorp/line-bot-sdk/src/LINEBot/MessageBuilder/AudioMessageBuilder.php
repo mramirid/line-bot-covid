@@ -20,6 +20,8 @@ namespace LINE\LINEBot\MessageBuilder;
 
 use LINE\LINEBot\Constant\MessageType;
 use LINE\LINEBot\MessageBuilder;
+use LINE\LINEBot\QuickReplyBuilder;
+use LINE\LINEBot\SenderBuilder\SenderBuilder;
 
 /**
  * A builder class for audio message.
@@ -30,33 +32,66 @@ class AudioMessageBuilder implements MessageBuilder
 {
     /** @var string */
     private $originalContentUrl;
+
     /** @var int */
     private $duration;
+
+    /** @var array */
+    private $message = [];
+
+    /** @var QuickReplyBuilder|null */
+    private $quickReply;
+
+    /** @var SenderBuilder|null */
+    private $sender;
 
     /**
      * AudioMessageBuilder constructor.
      *
      * @param string $originalContentUrl URL that serves audio file.
      * @param int $duration Duration of audio file (milli seconds)
+     * @param QuickReplyBuilder|null $quickReply
+     * @param SenderBuilder|null $sender
      */
-    public function __construct($originalContentUrl, $duration)
-    {
+    public function __construct(
+        $originalContentUrl,
+        $duration,
+        QuickReplyBuilder $quickReply = null,
+        SenderBuilder $sender = null
+    ) {
         $this->originalContentUrl = $originalContentUrl;
         $this->duration = $duration;
+        $this->quickReply = $quickReply;
+        $this->sender = $sender;
     }
 
     /**
-     * Builds
+     * Build audio message structure.
+     *
      * @return array
      */
     public function buildMessage()
     {
-        return [
-            [
-                'type' => MessageType::AUDIO,
-                'originalContentUrl' => $this->originalContentUrl,
-                'duration' => $this->duration,
-            ]
+        if (!empty($this->message)) {
+            return $this->message;
+        }
+
+        $audioMessage = [
+            'type' => MessageType::AUDIO,
+            'originalContentUrl' => $this->originalContentUrl,
+            'duration' => $this->duration,
         ];
+
+        if ($this->quickReply) {
+            $audioMessage['quickReply'] = $this->quickReply->buildQuickReply();
+        }
+
+        if ($this->sender) {
+            $audioMessage['sender'] = $this->sender->buildSender();
+        }
+
+        $this->message[] = $audioMessage;
+
+        return $this->message;
     }
 }

@@ -20,6 +20,8 @@ namespace LINE\LINEBot\MessageBuilder;
 
 use LINE\LINEBot\Constant\MessageType;
 use LINE\LINEBot\MessageBuilder;
+use LINE\LINEBot\QuickReplyBuilder;
+use LINE\LINEBot\SenderBuilder\SenderBuilder;
 
 /**
  * A builder class for video message.
@@ -30,19 +32,37 @@ class VideoMessageBuilder implements MessageBuilder
 {
     /** @var string */
     private $originalContentUrl;
+
     /** @var string */
     private $previewImageUrl;
+
+    /** @var QuickReplyBuilder|null */
+    private $quickReply;
+
+    /** @var SenderBuilder|null */
+    private $sender;
+
+    /** @var array */
+    private $message = [];
 
     /**
      * VideoMessageBuilder constructor.
      *
      * @param string $originalContentUrl
      * @param string $previewImageUrl
+     * @param QuickReplyBuilder|null $quickReply
+     * @param SenderBuilder|null $sender
      */
-    public function __construct($originalContentUrl, $previewImageUrl)
-    {
+    public function __construct(
+        $originalContentUrl,
+        $previewImageUrl,
+        QuickReplyBuilder $quickReply = null,
+        SenderBuilder $sender = null
+    ) {
         $this->originalContentUrl = $originalContentUrl;
         $this->previewImageUrl = $previewImageUrl;
+        $this->quickReply = $quickReply;
+        $this->sender = $sender;
     }
 
     /**
@@ -52,12 +72,26 @@ class VideoMessageBuilder implements MessageBuilder
      */
     public function buildMessage()
     {
-        return [
-            [
-                'type' => MessageType::VIDEO,
-                'originalContentUrl' => $this->originalContentUrl,
-                'previewImageUrl' => $this->previewImageUrl,
-            ]
+        if (!empty($this->message)) {
+            return $this->message;
+        }
+
+        $video = [
+            'type' => MessageType::VIDEO,
+            'originalContentUrl' => $this->originalContentUrl,
+            'previewImageUrl' => $this->previewImageUrl,
         ];
+
+        if ($this->quickReply) {
+            $video['quickReply'] = $this->quickReply->buildQuickReply();
+        }
+
+        if ($this->sender) {
+            $video['sender'] = $this->sender->buildSender();
+        }
+
+        $this->message[] = $video;
+
+        return $this->message;
     }
 }

@@ -20,6 +20,8 @@ namespace LINE\LINEBot\MessageBuilder;
 
 use LINE\LINEBot\Constant\MessageType;
 use LINE\LINEBot\MessageBuilder;
+use LINE\LINEBot\QuickReplyBuilder;
+use LINE\LINEBot\SenderBuilder\SenderBuilder;
 
 /**
  * A builder class for sticker message.
@@ -30,19 +32,37 @@ class StickerMessageBuilder implements MessageBuilder
 {
     /** @var string */
     private $packageId;
+
     /** @var string */
     private $stickerId;
+
+    /** @var array */
+    private $message = [];
+
+    /** @var QuickReplyBuilder|null */
+    private $quickReply;
+
+    /** @var SenderBuilder|null */
+    private $sender;
 
     /**
      * StickerMessageBuilder constructor.
      *
      * @param string $packageId
      * @param string $stickerId
+     * @param QuickReplyBuilder|null $quickReply
+     * @param SenderBuilder|null $sender
      */
-    public function __construct($packageId, $stickerId)
-    {
+    public function __construct(
+        $packageId,
+        $stickerId,
+        QuickReplyBuilder $quickReply = null,
+        SenderBuilder $sender = null
+    ) {
         $this->packageId = $packageId;
         $this->stickerId = $stickerId;
+        $this->quickReply = $quickReply;
+        $this->sender = $sender;
     }
 
     /**
@@ -52,12 +72,26 @@ class StickerMessageBuilder implements MessageBuilder
      */
     public function buildMessage()
     {
-        return [
-            [
-                'type' => MessageType::STICKER,
-                'packageId' => $this->packageId,
-                'stickerId' => $this->stickerId,
-            ]
+        if (!empty($this->message)) {
+            return $this->message;
+        }
+
+        $sticker = [
+            'type' => MessageType::STICKER,
+            'packageId' => $this->packageId,
+            'stickerId' => $this->stickerId,
         ];
+
+        if ($this->quickReply) {
+            $sticker['quickReply'] = $this->quickReply->buildQuickReply();
+        }
+
+        if ($this->sender) {
+            $sticker['sender'] = $this->sender->buildSender();
+        }
+
+        $this->message[] = $sticker;
+
+        return $this->message;
     }
 }

@@ -11,11 +11,16 @@ function getStatistikKasusForMessage()
     $querySelectLastData = "SELECT * FROM nasional ORDER BY id DESC LIMIT 1";
     $resultQuery         = mysqli_query($connection, $querySelectLastData);
     $resultLastDataId    = (object) mysqli_fetch_assoc($resultQuery);
+    $querySelectYesterdayData = "SELECT * FROM nasional WHERE DATE(created_at) = CURDATE() LIMIT 1";
+    $resultQuery2                = mysqli_query($connection, $querySelectYesterdayData);
+    $resultYesterdayDataId    = (object) mysqli_fetch_assoc($resultQuery2);
+
 
     $message = 'Statistik kasus di Indonesia' . PHP_EOL . PHP_EOL;
     $message .= 'Total positif: ' . str_replace(',', '', $resultLastDataId->positif) . PHP_EOL;
     $message .= 'Total sembuh: ' . str_replace(',', '', $resultLastDataId->sembuh) . PHP_EOL;
-    $message .= 'Total meninggal: ' . str_replace(',', '', $resultLastDataId->meninggal);
+    $message .= 'Total meninggal: ' . str_replace(',', '', $resultLastDataId->meninggal) . PHP_EOL;
+    $message .= 'Penambahan: ' . str_replace(',', '', $resultYesterdayDataId->positif-$resultLastDataId->positif) . PHP_EOL;
 
     return $message;
 }
@@ -50,6 +55,20 @@ function getTodayData()
 }
 
 /**
+ * Fungsi ini mengambil data pada tanggal sebelumnya
+ * Dieksekusi saat ingin mendapatkan data penambahan jumlah kasus
+ */
+function getYesterdayData()
+{
+    global $connection;
+
+    $querySelectYesterdayData   = "SELECT * FROM nasional WHERE DATE(created_at) = CURDATE()-1 LIMIT 1";
+    $resultQuery                = mysqli_query($connection, $querySelectYesterdayData);
+
+    return (object) mysqli_fetch_assoc($resultQuery);
+}
+
+/**
  * Fungsi ini memasukan data baru ke dalam database
  * Dieksekusi ketika hari sudah berganti
  * 
@@ -64,6 +83,23 @@ function insertNewRowToday($dataApiNasional)
                              VALUES ($dataApiNasional->positif, $dataApiNasional->sembuh, $dataApiNasional->meninggal, $dalamPerawatan)";
 
     mysqli_query($connection, $queryInsertIndonesia);
+}
+
+/**
+ * Fungsi ini mengecek apakah data yang tersimpan di database sudah usang
+ * Dieksekusi ketika terdapat data baru dari API
+ */
+function isDBExpired($dataDBNasional, $dataApiNasional)
+{
+    if (
+        $dataDBNasional->positif < $dataApiNasional->positif ||
+        $dataDBNasional->sembuh < $dataApiNasional->sembuh ||
+        $dataDBNasional->meninggal < $dataApiNasional->meninggal
+    ) {
+        return true;
+    }
+
+    return false;
 }
 
 /**

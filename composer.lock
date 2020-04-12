@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e8186dfbf41863fa3efa2f1deab36f4",
+    "content-hash": "7927a1f6a66b93eb0d008ea80b05b410",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -31,31 +31,39 @@
                 "MIT"
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
+            "abandoned": "psr/container",
             "time": "2014-12-30T15:22:37+00:00"
         },
         {
             "name": "linecorp/line-bot-sdk",
-            "version": "2.3.0",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/line/line-bot-sdk-php.git",
-                "reference": "38528aaa3a1abc2809974ab65cdcb7579f9eb927"
+                "reference": "b861e344eec524d4a9b6824bcab765ca95e938c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/line/line-bot-sdk-php/zipball/38528aaa3a1abc2809974ab65cdcb7579f9eb927",
-                "reference": "38528aaa3a1abc2809974ab65cdcb7579f9eb927",
+                "url": "https://api.github.com/repos/line/line-bot-sdk-php/zipball/b861e344eec524d4a9b6824bcab765ca95e938c7",
+                "reference": "b861e344eec524d4a9b6824bcab765ca95e938c7",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4"
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-sockets": "*",
+                "php": ">=5.5"
             },
             "require-dev": {
-                "apigen/apigen": "~4.1",
+                "ext-posix": "*",
                 "indigophp/hash-compat": "~1.1.0",
                 "phpmd/phpmd": "~2.4",
-                "phpunit/phpunit": "^4.8.24",
-                "squizlabs/php_codesniffer": "~2.6"
+                "phpunit/phpunit": "^4.8.24||^5||^6",
+                "squizlabs/php_codesniffer": "~2.6||^3"
+            },
+            "suggest": {
+                "apigen/apigen": "Install with roave/better-reflection:dev-master to generate docs",
+                "roave/better-reflection": "Required by apigen/apigen:dev-master"
             },
             "type": "library",
             "autoload": {
@@ -65,16 +73,28 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache License Version 2.0"
+                "Apache-2.0"
             ],
             "authors": [
                 {
                     "name": "moznion",
-                    "email": "moznion@gmail.com"
+                    "email": "moznion@gmail.com",
+                    "role": "Retired"
                 },
                 {
                     "name": "Satoru Yoshihara",
-                    "email": "vaduz0@gmail.com"
+                    "email": "vaduz0@gmail.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Satoshi Shibuya",
+                    "email": "satosby@gmail.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Shunsuke Mori",
+                    "email": "morimorim7180@gmail.com",
+                    "role": "Maintainer"
                 }
             ],
             "description": "SDK of the LINE BOT API for PHP",
@@ -84,7 +104,7 @@
                 "line",
                 "sdk"
             ],
-            "time": "2017-09-20T10:22:04+00:00"
+            "time": "2020-03-26T06:07:16+00:00"
         },
         {
             "name": "nikic/fast-route",

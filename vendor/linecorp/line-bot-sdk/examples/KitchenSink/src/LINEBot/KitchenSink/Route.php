@@ -20,6 +20,7 @@ namespace LINE\LINEBot\KitchenSink;
 
 use LINE\LINEBot;
 use LINE\LINEBot\Constant\HTTPHeader;
+use LINE\LINEBot\Event\AccountLinkEvent;
 use LINE\LINEBot\Event\BeaconDetectionEvent;
 use LINE\LINEBot\Event\FollowEvent;
 use LINE\LINEBot\Event\JoinEvent;
@@ -33,6 +34,7 @@ use LINE\LINEBot\Event\MessageEvent\TextMessage;
 use LINE\LINEBot\Event\MessageEvent\UnknownMessage;
 use LINE\LINEBot\Event\MessageEvent\VideoMessage;
 use LINE\LINEBot\Event\PostbackEvent;
+use LINE\LINEBot\Event\ThingsEvent;
 use LINE\LINEBot\Event\UnfollowEvent;
 use LINE\LINEBot\Event\UnknownEvent;
 use LINE\LINEBot\Exception\InvalidEventRequestException;
@@ -48,6 +50,7 @@ use LINE\LINEBot\KitchenSink\EventHandler\MessageHandler\StickerMessageHandler;
 use LINE\LINEBot\KitchenSink\EventHandler\MessageHandler\TextMessageHandler;
 use LINE\LINEBot\KitchenSink\EventHandler\MessageHandler\VideoMessageHandler;
 use LINE\LINEBot\KitchenSink\EventHandler\PostbackEventHandler;
+use LINE\LINEBot\KitchenSink\EventHandler\ThingsEventHandler;
 use LINE\LINEBot\KitchenSink\EventHandler\UnfollowEventHandler;
 
 class Route
@@ -118,6 +121,10 @@ class Route
                     $handler = new PostbackEventHandler($bot, $logger, $event);
                 } elseif ($event instanceof BeaconDetectionEvent) {
                     $handler = new BeaconEventHandler($bot, $logger, $event);
+                } elseif ($event instanceof AccountLinkEvent) {
+                    $handler = new AccountLinkEventHandler($bot, $logger, $event);
+                } elseif ($event instanceof ThingsEvent) {
+                    $handler = new ThingsEventHandler($bot, $logger, $event);
                 } elseif ($event instanceof UnknownEvent) {
                     $logger->info(sprintf('Unknown message type has come [type: %s]', $event->getType()));
                 } else {
