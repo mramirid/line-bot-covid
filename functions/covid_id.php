@@ -61,7 +61,6 @@ function getYesterdayData()
     $resultQuery                = mysqli_query($connection, $querySelectYesterdayData);
 
     return (object) mysqli_fetch_assoc($resultQuery);
-
 }
 
 /**
