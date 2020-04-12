@@ -93,6 +93,8 @@ function isDBExpired($dataDBNasional, $dataApiNasional)
     ) {
         return true;
     }
+
+    return false;
 }
 
 /**
