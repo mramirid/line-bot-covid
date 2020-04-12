@@ -8,7 +8,6 @@ use \LINE\LINEBot;
 use \LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use \Slim\App;
 use \Dotenv\Dotenv;
-use \FlexNasional\FlexSampleRestaurant;
 
 // load config
 $dotenv = new Dotenv(__DIR__);
@@ -55,17 +54,12 @@ $app->post('/', function ($request, $response)
 		switch (strtolower($userMessage)) {
 			case 'halo':
 				$message = "Halo juga";
-				$textMessageBuilder = new TextMessageBuilder($message);
-				$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
-				return $result->getHTTPStatus() . ' ' . $result->getRawBody();
 				break;
 			case 'info_covid_id':
-				// $covidId = new CovidIndonesia();
-				// $message = $covidId->getStatistikKasusForMessage();
+				$message = "info";
 				break;
 			case 'test':
-				$message = FlexSampleRestaurant::get();
-				return $bot->replyMessage($event['replyToken'], $message);
+				
 				break;
 			case 'help':
 				$message = '"halo" -> Respon halo' . PHP_EOL;
@@ -76,7 +70,9 @@ $app->post('/', function ($request, $response)
 				break;
 		}
 
-		
+		$textMessageBuilder = new TextMessageBuilder($message);
+		$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+		return $result->getHTTPStatus() . ' ' . $result->getRawBody();
 	}
 });
 
