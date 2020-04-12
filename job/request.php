@@ -8,21 +8,17 @@ date_default_timezone_set('Asia/Jakarta');
 /* ---------------------- Data Nasional ---------------------- */
 
 // Ambil data terakhir di tabel nasional
-$resultLastDataId    = CovidID\getTodayData();
+$dataDBNasional    = CovidID\getTodayData();
 
 // Ambil statistik kasus di Indonesia
 $dataApiNasional = CovidID\fetchUpdateStatistik();
 
-if (!(array) $resultLastDataId) :
+if (!(array) $dataDBNasional) :
     // Jika data kosong, lakukan insert
     CovidID\insertNewRowToday($dataApiNasional);
-elseif (
-    $resultLastDataId->positif < $dataApiNasional->positif ||
-    $resultLastDataId->sembuh < $dataApiNasional->sembuh ||
-    $resultLastDataId->meninggal < $dataApiNasional->meninggal
-) :
+elseif (CovidID\isDBExpired($dataApiNasional, $dataApiNasional)) :
     // Jika data hari ini sudah usang, update
-    CovidID\updateTodayData($resultLastDataId->id, $dataApiNasional);
+    CovidID\updateTodayData($dataDBNasional->id, $dataApiNasional);
 endif;
 
 /* ---------------------- End of Data Nasional ---------------------- */

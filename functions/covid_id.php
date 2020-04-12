@@ -67,6 +67,21 @@ function insertNewRowToday($dataApiNasional)
 }
 
 /**
+ * Fungsi ini mengecek apakah data yang tersimpan di database sudah usang
+ * Dieksekusi ketika terdapat data baru dari API
+ */
+function isDBExpired($dataDBNasional, $dataApiNasional)
+{
+    if (
+        $dataDBNasional->positif < $dataApiNasional->positif ||
+        $dataDBNasional->sembuh < $dataApiNasional->sembuh ||
+        $dataDBNasional->meninggal < $dataApiNasional->meninggal
+    ) {
+        return true;
+    }
+}
+
+/**
  * Fungsi ini mengupdate data hari ini yang tersimpan di database
  * Dieksekusi ketika ada perubahan dari API
  * 
