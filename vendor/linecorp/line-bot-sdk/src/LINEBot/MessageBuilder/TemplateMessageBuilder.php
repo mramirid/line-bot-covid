@@ -20,6 +20,8 @@ namespace LINE\LINEBot\MessageBuilder;
 
 use LINE\LINEBot\Constant\MessageType;
 use LINE\LINEBot\MessageBuilder;
+use LINE\LINEBot\QuickReplyBuilder;
+use LINE\LINEBot\SenderBuilder\SenderBuilder;
 
 /**
  * A builder class for template message.
@@ -30,18 +32,39 @@ class TemplateMessageBuilder implements MessageBuilder
 {
     /** @var string */
     private $altText;
+
     /** @var TemplateBuilder */
     private $templateBuilder;
 
+    /** @var array */
+    private $message = [];
+
+    /**
+     * @var QuickReplyBuilder|null
+     */
+    private $quickReply;
+
+    /** @var SenderBuilder|null */
+    private $sender;
+
     /**
      * TemplateMessageBuilder constructor.
+     *
      * @param string $altText
      * @param TemplateBuilder $templateBuilder
+     * @param QuickReplyBuilder|null $quickReply
+     * @param SenderBuilder|null $sender
      */
-    public function __construct($altText, TemplateBuilder $templateBuilder)
-    {
+    public function __construct(
+        $altText,
+        TemplateBuilder $templateBuilder,
+        QuickReplyBuilder $quickReply = null,
+        SenderBuilder $sender = null
+    ) {
         $this->altText = $altText;
         $this->templateBuilder = $templateBuilder;
+        $this->quickReply = $quickReply;
+        $this->sender = $sender;
     }
 
     /**
@@ -51,12 +74,26 @@ class TemplateMessageBuilder implements MessageBuilder
      */
     public function buildMessage()
     {
-        return [
-            [
-                'type' => MessageType::TEMPLATE,
-                'altText' => $this->altText,
-                'template' => $this->templateBuilder->buildTemplate(),
-            ]
+        if (!empty($this->message)) {
+            return $this->message;
+        }
+
+        $templateMessage = [
+            'type' => MessageType::TEMPLATE,
+            'altText' => $this->altText,
+            'template' => $this->templateBuilder->buildTemplate(),
         ];
+
+        if ($this->quickReply) {
+            $templateMessage['quickReply'] = $this->quickReply->buildQuickReply();
+        }
+
+        if ($this->sender) {
+            $templateMessage['sender'] = $this->sender->buildSender();
+        }
+
+        $this->message[] = $templateMessage;
+
+        return $this->message;
     }
 }

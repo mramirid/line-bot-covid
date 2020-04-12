@@ -1,60 +1,5 @@
 [
     {
-        "name": "linecorp/line-bot-sdk",
-        "version": "2.3.0",
-        "version_normalized": "2.3.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/line/line-bot-sdk-php.git",
-            "reference": "38528aaa3a1abc2809974ab65cdcb7579f9eb927"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/line/line-bot-sdk-php/zipball/38528aaa3a1abc2809974ab65cdcb7579f9eb927",
-            "reference": "38528aaa3a1abc2809974ab65cdcb7579f9eb927",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.4"
-        },
-        "require-dev": {
-            "apigen/apigen": "~4.1",
-            "indigophp/hash-compat": "~1.1.0",
-            "phpmd/phpmd": "~2.4",
-            "phpunit/phpunit": "^4.8.24",
-            "squizlabs/php_codesniffer": "~2.6"
-        },
-        "time": "2017-09-20T10:22:04+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "LINE\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Apache License Version 2.0"
-        ],
-        "authors": [
-            {
-                "name": "moznion",
-                "email": "moznion@gmail.com"
-            },
-            {
-                "name": "Satoru Yoshihara",
-                "email": "vaduz0@gmail.com"
-            }
-        ],
-        "description": "SDK of the LINE BOT API for PHP",
-        "homepage": "https://github.com/line/line-bot-sdk-php",
-        "keywords": [
-            "bot",
-            "line",
-            "sdk"
-        ]
-    },
-    {
         "name": "container-interop/container-interop",
         "version": "1.1.0",
         "version_normalized": "1.1.0.0",
@@ -81,7 +26,82 @@
         "license": [
             "MIT"
         ],
-        "description": "Promoting the interoperability of container objects (DIC, SL, etc.)"
+        "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
+        "abandoned": "psr/container"
+    },
+    {
+        "name": "linecorp/line-bot-sdk",
+        "version": "4.3.0",
+        "version_normalized": "4.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/line/line-bot-sdk-php.git",
+            "reference": "b861e344eec524d4a9b6824bcab765ca95e938c7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/line/line-bot-sdk-php/zipball/b861e344eec524d4a9b6824bcab765ca95e938c7",
+            "reference": "b861e344eec524d4a9b6824bcab765ca95e938c7",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-json": "*",
+            "ext-sockets": "*",
+            "php": ">=5.5"
+        },
+        "require-dev": {
+            "ext-posix": "*",
+            "indigophp/hash-compat": "~1.1.0",
+            "phpmd/phpmd": "~2.4",
+            "phpunit/phpunit": "^4.8.24||^5||^6",
+            "squizlabs/php_codesniffer": "~2.6||^3"
+        },
+        "suggest": {
+            "apigen/apigen": "Install with roave/better-reflection:dev-master to generate docs",
+            "roave/better-reflection": "Required by apigen/apigen:dev-master"
+        },
+        "time": "2020-03-26T06:07:16+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "LINE\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "moznion",
+                "email": "moznion@gmail.com",
+                "role": "Retired"
+            },
+            {
+                "name": "Satoru Yoshihara",
+                "email": "vaduz0@gmail.com",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Satoshi Shibuya",
+                "email": "satosby@gmail.com",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Shunsuke Mori",
+                "email": "morimorim7180@gmail.com",
+                "role": "Maintainer"
+            }
+        ],
+        "description": "SDK of the LINE BOT API for PHP",
+        "homepage": "https://github.com/line/line-bot-sdk-php",
+        "keywords": [
+            "bot",
+            "line",
+            "sdk"
+        ]
     },
     {
         "name": "nikic/fast-route",
@@ -126,6 +146,54 @@
         "keywords": [
             "router",
             "routing"
+        ]
+    },
+    {
+        "name": "pimple/pimple",
+        "version": "v3.0.2",
+        "version_normalized": "3.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/silexphp/Pimple.git",
+            "reference": "a30f7d6e57565a2e1a316e1baf2a483f788b258a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/silexphp/Pimple/zipball/a30f7d6e57565a2e1a316e1baf2a483f788b258a",
+            "reference": "a30f7d6e57565a2e1a316e1baf2a483f788b258a",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2015-09-11T15:10:35+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Pimple": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Pimple, a simple Dependency Injection Container",
+        "homepage": "http://pimple.sensiolabs.org",
+        "keywords": [
+            "container",
+            "dependency injection"
         ]
     },
     {
@@ -178,54 +246,6 @@
             "psr-7",
             "request",
             "response"
-        ]
-    },
-    {
-        "name": "pimple/pimple",
-        "version": "v3.0.2",
-        "version_normalized": "3.0.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/silexphp/Pimple.git",
-            "reference": "a30f7d6e57565a2e1a316e1baf2a483f788b258a"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/silexphp/Pimple/zipball/a30f7d6e57565a2e1a316e1baf2a483f788b258a",
-            "reference": "a30f7d6e57565a2e1a316e1baf2a483f788b258a",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2015-09-11T15:10:35+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Pimple": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            }
-        ],
-        "description": "Pimple, a simple Dependency Injection Container",
-        "homepage": "http://pimple.sensiolabs.org",
-        "keywords": [
-            "container",
-            "dependency injection"
         ]
     },
     {
