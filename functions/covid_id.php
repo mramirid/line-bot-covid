@@ -50,6 +50,21 @@ function getTodayData()
 }
 
 /**
+ * Fungsi ini mengambil data pada tanggal sebelumnya
+ * Dieksekusi saat ingin mendapatkan data penambahan jumlah kasus
+ */
+function getYesterdayData()
+{
+    global $connection;
+
+    $querySelectYesterdayData   = "SELECT * FROM nasional WHERE DATE(created_at) = CURDATE()-1 LIMIT 1";
+    $resultQuery                = mysqli_query($connection, $querySelectYesterdayData);
+
+    return (object) mysqli_fetch_assoc($resultQuery);
+
+}
+
+/**
  * Fungsi ini memasukan data baru ke dalam database
  * Dieksekusi ketika hari sudah berganti
  * 
