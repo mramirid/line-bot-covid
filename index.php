@@ -8,6 +8,7 @@ use \LINE\LINEBot;
 use \LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use \Slim\App;
 use \Dotenv\Dotenv;
+use \FlexNasional\FlexSampleRestaurant;
 
 // load config
 $dotenv = new Dotenv(__DIR__);
@@ -60,8 +61,7 @@ $app->post('/', function ($request, $response)
 				// $message = $covidId->getStatistikKasusForMessage();
 				break;
 			case 'test':
-				require_once "./templates/flex_nasional.php";
-				$message = json_encode($flex);
+				$message = FlexSampleRestaurant::get();
 				break;
 			case 'help':
 				$message = '"halo" -> Respon halo' . PHP_EOL;
