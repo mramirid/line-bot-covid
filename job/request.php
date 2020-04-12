@@ -16,7 +16,7 @@ $dataApiNasional = CovidID\fetchUpdateStatistik();
 if (!(array) $dataDBNasional) :
     // Jika data kosong, lakukan insert
     CovidID\insertNewRowToday($dataApiNasional);
-elseif (CovidID\isDBExpired($dataApiNasional, $dataApiNasional)) :
+elseif (CovidID\isDBExpired($dataDBNasional, $dataApiNasional)) :
     // Jika data hari ini sudah usang, update
     CovidID\updateTodayData($dataDBNasional->id, $dataApiNasional);
 endif;
