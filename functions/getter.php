@@ -34,7 +34,7 @@ function getMessageKasusNasional()
     $message .= "Total meninggal: $resultLastDataId->meninggal (+$selisihMeninggal)" . PHP_EOL;
     $message .= "Penambahan per hari ini: $selisihTotal" . PHP_EOL;
     $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
-    $message .= "Pembaruan Terakhir Pada " . date('H:i', $last_update);
+    $message .= "Pembaruan terakhir hari ini pada " . date('H:i', $last_update);
 
     return $message;
 }
