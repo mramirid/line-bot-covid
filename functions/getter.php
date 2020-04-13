@@ -26,12 +26,15 @@ function getMessageKasusNasional()
     $totalYesterday   = $resultYesterdayData->positif + $resultYesterdayData->sembuh + $resultYesterdayData->meninggal;
     $totalToday       = $resultLastDataId->positif + $resultLastDataId->sembuh + $resultLastDataId->meninggal;
     $selisihTotal     = $totalToday - $totalYesterday;
+    $last_update    = strtotime($resultLastDataId->updated_at);
 
     $message  = 'Statistik kasus di Indonesia' . PHP_EOL . PHP_EOL;
     $message .= "Total positif: $resultLastDataId->positif (+$selisihPositif)" . PHP_EOL;
     $message .= "Total sembuh: $resultLastDataId->sembuh (+$selisihSembuh)" . PHP_EOL;
     $message .= "Total meninggal: $resultLastDataId->meninggal (+$selisihMeninggal)" . PHP_EOL;
-    $message .= "Penambahan per hari ini: $selisihTotal";
+    $message .= "Penambahan per hari ini: $selisihTotal" . PHP_EOL;
+    $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
+    $message .= "Pembaruan Terakhir Pada " . date('H:i', $last_update);
 
     return $message;
 }
