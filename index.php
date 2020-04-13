@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
-require_once 'functions/getter.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/getter.php';
 
 use \LINE\LINEBot\SignatureValidator as SignatureValidator;
 use \LINE\LINEBot\HTTPClient\CurlHTTPClient;
@@ -63,9 +63,10 @@ $app->post('/', function ($request, $response)
 				require_once "templates/msg_available_provinces.php";
 				$message = "";
 				break;
-			case 'help':
-				$message = '"halo" -> Respon halo' . PHP_EOL;
-				$message .= '"nasional" -> Meminta statistik kasus COVID-19 di Indonesia';
+			case '/help':
+				$message = '1. halo -> Respon halo' . PHP_EOL;
+				$message .= '2. /nasional -> Kasus COVID-19 di Indonesia'  . PHP_EOL;
+				$message .= '3. /provinsi -> List provinsi';
 				break;
 			default:
 				$message = "Maaf perintah tidak diketahui";
