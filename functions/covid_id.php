@@ -2,37 +2,7 @@
 
 namespace CovidID;
 
-require_once "../database/config.php";
-
-function getStatistikKasusForMessage()
-{
-    global $connection;
-
-    // Data hari ini
-    $querySelectLastData = "SELECT * FROM nasional ORDER BY id DESC LIMIT 1";
-    $resultQuery         = mysqli_query($connection, $querySelectLastData);
-    $resultLastDataId    = (object) mysqli_fetch_assoc($resultQuery);
-
-    // Data kemarin
-    $resultYesterdayData = getYesterdayData();
-
-    // Hitung banyak penambahan kasus
-    $selisihPositif   = $resultLastDataId->positif - $resultYesterdayData->positif;
-    $selisihSembuh    = $resultLastDataId->sembuh - $resultYesterdayData->sembuh;
-    $selisihMeninggal = $resultLastDataId->meninggal - $resultYesterdayData->meninggal;
-
-    $totalYesterday   = $resultYesterdayData->positif + $resultYesterdayData->sembuh + $resultYesterdayData->meninggal;
-    $totalToday       = $resultLastDataId->positif + $resultLastDataId->sembuh + $resultLastDataId->meninggal;
-    $selisihTotal     = $totalToday - $totalYesterday;
-
-    $message  = 'Statistik kasus di Indonesia' . "<br>" . "<br>";
-    $message .= "Total positif: $resultLastDataId->positif (+$selisihPositif)" . "<br>";
-    $message .= "Total sembuh: $resultLastDataId->sembuh (+$selisihSembuh)" . "<br>";
-    $message .= "Total meninggal: $resultLastDataId->meninggal (+$selisihMeninggal)" . "<br>";
-    $message .= "Penambahan per hari ini: $selisihTotal";
-
-    return $message;
-}
+require_once "/home/amirrpw/mirrbot.amirr.pw/database/config.php";
 
 /* ------------- Keperluan request Cron Job ------------- */
 
@@ -59,20 +29,6 @@ function getTodayData()
 
     $querySelectLastData = "SELECT * FROM nasional WHERE DATE(created_at) = CURDATE() LIMIT 1";
     $resultQuery         = mysqli_query($connection, $querySelectLastData);
-
-    return (object) mysqli_fetch_assoc($resultQuery);
-}
-
-/**
- * Fungsi ini mengambil data pada tanggal sebelumnya
- * Dieksekusi saat ingin mendapatkan data penambahan jumlah kasus
- */
-function getYesterdayData()
-{
-    global $connection;
-
-    $querySelectYesterdayData   = "SELECT * FROM nasional WHERE DATE(created_at) = CURDATE()-1 LIMIT 1";
-    $resultQuery                = mysqli_query($connection, $querySelectYesterdayData);
 
     return (object) mysqli_fetch_assoc($resultQuery);
 }

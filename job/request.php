@@ -1,7 +1,7 @@
 <?php
 
-require_once '../functions/covid_id.php';
-require_once '../functions/covid_prov.php';
+require_once '/home/amirrpw/mirrbot.amirr.pw/functions/covid_id.php';
+require_once '/home/amirrpw/mirrbot.amirr.pw/functions/covid_prov.php';
 
 date_default_timezone_set('Asia/Jakarta');
 

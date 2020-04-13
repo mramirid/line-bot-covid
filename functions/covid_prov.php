@@ -2,7 +2,7 @@
 
 namespace CovidProv;
 
-require_once "../database/config.php";
+require_once "/home/amirrpw/mirrbot.amirr.pw/database/config.php";
 
 /* ------------- Keperluan request Cron Job ------------- */
 

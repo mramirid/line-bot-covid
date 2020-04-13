@@ -1,6 +1,7 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once 'functions/getter.php';
 
 use \LINE\LINEBot\SignatureValidator as SignatureValidator;
 use \LINE\LINEBot\HTTPClient\CurlHTTPClient;
@@ -56,11 +57,11 @@ $app->post('/', function ($request, $response)
 				$message = "Halo juga";
 				break;
 			case 'info_covid_id':
-				$message = "info";
+				$message = getMessageKasusNasional();
 				break;
 			case 'test':
-				require_once "./templates/flex_nasional.php";
-				$message = json_encode($flex, JSON_UNESCAPED_SLASHES);
+				require_once "templates/flex_nasional.php";
+				$message = $flex_nasional;
 				break;
 			case 'help':
 				$message = '"halo" -> Respon halo' . PHP_EOL;
