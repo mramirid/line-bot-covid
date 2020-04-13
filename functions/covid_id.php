@@ -8,19 +8,28 @@ function getStatistikKasusForMessage()
 {
     global $connection;
 
+    // Data hari ini
     $querySelectLastData = "SELECT * FROM nasional ORDER BY id DESC LIMIT 1";
     $resultQuery         = mysqli_query($connection, $querySelectLastData);
     $resultLastDataId    = (object) mysqli_fetch_assoc($resultQuery);
-    $querySelectYesterdayData = "SELECT * FROM nasional WHERE DATE(created_at) = CURDATE() LIMIT 1";
-    $resultQuery2                = mysqli_query($connection, $querySelectYesterdayData);
-    $resultYesterdayDataId    = (object) mysqli_fetch_assoc($resultQuery2);
 
+    // Data kemarin
+    $resultYesterdayData = getYesterdayData();
 
-    $message = 'Statistik kasus di Indonesia' . PHP_EOL . PHP_EOL;
-    $message .= 'Total positif: ' . str_replace(',', '', $resultLastDataId->positif) . PHP_EOL;
-    $message .= 'Total sembuh: ' . str_replace(',', '', $resultLastDataId->sembuh) . PHP_EOL;
-    $message .= 'Total meninggal: ' . str_replace(',', '', $resultLastDataId->meninggal) . PHP_EOL;
-    $message .= 'Penambahan: ' . str_replace(',', '', $resultYesterdayDataId->positif-$resultLastDataId->positif) . PHP_EOL;
+    // Hitung banyak penambahan kasus
+    $selisihPositif   = $resultLastDataId->positif - $resultYesterdayData->positif;
+    $selisihSembuh    = $resultLastDataId->sembuh - $resultYesterdayData->sembuh;
+    $selisihMeninggal = $resultLastDataId->meninggal - $resultYesterdayData->meninggal;
+
+    $totalYesterday   = $resultYesterdayData->positif + $resultYesterdayData->sembuh + $resultYesterdayData->meninggal;
+    $totalToday       = $resultLastDataId->positif + $resultLastDataId->sembuh + $resultLastDataId->meninggal;
+    $selisihTotal     = $totalToday - $totalYesterday;
+
+    $message  = 'Statistik kasus di Indonesia' . "<br>" . "<br>";
+    $message .= "Total positif: $resultLastDataId->positif (+$selisihPositif)" . "<br>";
+    $message .= "Total sembuh: $resultLastDataId->sembuh (+$selisihSembuh)" . "<br>";
+    $message .= "Total meninggal: $resultLastDataId->meninggal (+$selisihMeninggal)" . "<br>";
+    $message .= "Penambahan per hari ini: $selisihTotal";
 
     return $message;
 }
