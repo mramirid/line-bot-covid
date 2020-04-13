@@ -4,6 +4,7 @@ namespace CovidID;
 
 require_once '/home/amirrpw/mirrbot.amirr.pw/database/config.php';
 
+date_default_timezone_set('Asia/Jakarta');
 /* ------------- Keperluan request Cron Job ------------- */
 
 /**
@@ -56,10 +57,13 @@ function insertNewRowToday($dataApiNasional)
  */
 function isDBExpired($dataDBNasional, $dataApiNasional)
 {
+    $current_time = time();
+    $convert_current_time = date('Y:m:d H:i:s', $current_time);
     if (
         $dataDBNasional->positif < $dataApiNasional->positif ||
         $dataDBNasional->sembuh < $dataApiNasional->sembuh ||
-        $dataDBNasional->meninggal < $dataApiNasional->meninggal
+        $dataDBNasional->meninggal < $dataApiNasional->meninggal ||
+        $dataDBNasional->updated_at < $convert_current_time
     ) {
         return true;
     }
