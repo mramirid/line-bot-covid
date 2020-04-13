@@ -106,12 +106,16 @@ function insertNewDataToday($dataApiProvinsi)
  */
 function isDBExpired($dataDBProvinsi, $dataApiProvinsi)
 {
+    $current_time = time();
+    $convert_current_time = date('Y:m:d H:i:s', $current_time);
+
     $i = 0;
     while ($provinsi = mysqli_fetch_assoc($dataDBProvinsi)) {
         if (
             $provinsi['positif'] < $dataApiProvinsi[$i]->positif ||
             $provinsi['sembuh'] < $dataApiProvinsi[$i]->sembuh ||
-            $provinsi['meninggal'] < $dataApiProvinsi[$i]->meninggal
+            $provinsi['meninggal'] < $dataApiProvinsi[$i]->meninggal ||
+            $provinsi['updated_at'] < $convert_current_time
         ) {
             return true;
         }
