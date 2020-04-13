@@ -2,6 +2,8 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/database/config.php';
 
+date_default_timezone_set('Asia/Jakarta');
+
 /* ---------------------- Getter data nasional ---------------------- */
 
 function getMessageKasusNasional()
