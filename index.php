@@ -52,6 +52,7 @@ $app->post('/', function ($request, $response)
 	{
 		$userMessage = $event['message']['text'];
 
+		// Mendapatkan argumen dari perintah
 		$extractCommand = explode(' ', $userMessage);
 
 		switch (strtolower($extractCommand[0])) {
