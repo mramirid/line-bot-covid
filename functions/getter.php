@@ -1,6 +1,6 @@
 <?php
 
-require_once '../database/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/database/config.php';
 
 /* ---------------------- Getter data nasional ---------------------- */
 
@@ -52,6 +52,39 @@ function getYesterdayDataNasional()
 
 /* ---------------------- Getter data provinsi ---------------------- */
 
+function getMessageKasusByProvince($province) {
 
+}
+
+function getAvailableProvinces() {
+
+}
+
+/**
+ * Fungsi ini mengambil data pada tanggal sebelumnya
+ * Dieksekusi saat ingin mendapatkan data penambahan jumlah kasus
+ */
+function getYesterdayData()
+{
+    global $connection;
+
+    $querySelectLastData = "SELECT 
+                                pengambilan_provinsi.id AS id_pengambilan,
+                                created_at,
+                                updated_at,
+                                detail_pengambilan_provinsi.id AS id_detail_pengambilan,
+                                kode_provinsi,
+                                nama_provinsi,
+                                positif,
+                                sembuh,
+                                dalam_perawatan,
+                                meninggal
+                            FROM pengambilan_provinsi
+                            LEFT JOIN detail_pengambilan_provinsi
+                            ON pengambilan_provinsi.id = detail_pengambilan_provinsi.id_pengambilan_provinsi
+                            WHERE DATE(pengambilan_provinsi.created_at) = CURDATE()-1";
+
+    return mysqli_query($connection, $querySelectLastData);
+}
 
 /* ---------------------- End of Getter data provinsi ---------------------- */

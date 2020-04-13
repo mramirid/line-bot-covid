@@ -56,16 +56,16 @@ $app->post('/', function ($request, $response)
 			case 'halo':
 				$message = "Halo juga";
 				break;
-			case 'info_covid_id':
+			case '/nasional':
 				$message = getMessageKasusNasional();
 				break;
-			case 'test':
-				require_once "templates/flex_nasional.php";
-				$message = $flex_nasional;
+			case '/provinsi':
+				require_once "templates/msg_available_provinces.php";
+				$message = "";
 				break;
 			case 'help':
 				$message = '"halo" -> Respon halo' . PHP_EOL;
-				$message .= '"info_covid_id" -> Meminta statistik kasus COVID-19 di Indonesia';
+				$message .= '"nasional" -> Meminta statistik kasus COVID-19 di Indonesia';
 				break;
 			default:
 				$message = "Maaf perintah tidak diketahui";

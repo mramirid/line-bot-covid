@@ -2,7 +2,7 @@
 
 namespace CovidID;
 
-require_once "/home/amirrpw/mirrbot.amirr.pw/database/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/database/config.php";
 
 /* ------------- Keperluan request Cron Job ------------- */
 
