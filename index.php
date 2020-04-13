@@ -60,13 +60,20 @@ $app->post('/', function ($request, $response)
 				$message = getMessageKasusNasional();
 				break;
 			case '/provinsi':
-				require_once "templates/msg_available_provinces.php";
+				$message = "";
+				break;
+			case '/available_provinsi':
+				$message = getMessageAvailableProvinces();
+				break;
+			case '/cari_provinsi':
 				$message = "";
 				break;
 			case '/help':
 				$message = '1. halo -> Respon halo' . PHP_EOL;
 				$message .= '2. /nasional -> Kasus COVID-19 di Indonesia'  . PHP_EOL;
-				$message .= '3. /provinsi -> List provinsi';
+				$message .= '3. /provinsi -> List kasus seluruh provinsi' . PHP_EOL;
+				$message .= '4. /available_provinsi -> List provinsi yang datanya tersedia'  . PHP_EOL;
+				$message .= '5. /cari_provinsi [kode_provinsi] -> Cari provinsi berdasarkan kode provinsi (lihat di /available_provinsi)';
 				break;
 			default:
 				$message = "Maaf perintah tidak diketahui";
