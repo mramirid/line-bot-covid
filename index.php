@@ -60,7 +60,7 @@ $app->post('/', function ($request, $response)
 				$message = getMessageKasusNasional();
 				break;
 			case '/provinsi':
-				$message = "";
+				$message = getMessageForKasusProvinsi();
 				break;
 			case '/available_provinsi':
 				$message = getMessageAvailableProvinces();
