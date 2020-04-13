@@ -52,7 +52,9 @@ $app->post('/', function ($request, $response)
 	{
 		$userMessage = $event['message']['text'];
 
-		switch (strtolower($userMessage)) {
+		$extractCommand = explode(' ', $userMessage);
+
+		switch (strtolower($extractCommand[0])) {
 			case 'halo':
 				$message = "Halo juga";
 				break;
@@ -66,7 +68,11 @@ $app->post('/', function ($request, $response)
 				$message = getMessageAvailableProvinces();
 				break;
 			case '/cari_provinsi':
-				$message = "";
+				if (isset($extractCommand[1])):
+					$message = getMessageKasusByProvince($extractCommand[1]);
+				else:
+					$message = "Masukan kode provinsi yang anda cari";
+				endif;
 				break;
 			case '/help':
 				$message = '1. halo -> Respon halo' . PHP_EOL;
