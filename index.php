@@ -98,6 +98,8 @@ $app->post('/', function ($request, $response)
 				// $message .= '4. /available_provinsi -> List provinsi yang datanya tersedia'  . PHP_EOL;
 				// $message .= '5. /cari_provinsi [kode_provinsi] -> Cari provinsi berdasarkan kode provinsi (lihat di /available_provinsi)';
 				break;
+			case '':
+				break;
 			default:
 				$message = "Maaf perintah tidak diketahui";
 				break;
