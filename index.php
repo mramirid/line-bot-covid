@@ -59,7 +59,9 @@ $app->post('/', function ($request, $response)
 		if ($extractCommand_check[0] == '/'):
 			switch (strtolower(trim($extractCommand[0]))) {
 				case '/halo':
-					$message = "Halo juga";
+					$message = "Halo juga," . PHP_EOL;
+					$message .= "Saya adalah bot yang didesain untuk memberikan info kasus COVID-19 baik secara nasional maupun berdasarkan provinsi." . PHP_EOL;
+					$message .= "Ketikkan '/help' untuk mendapatkan informasi mengenai fitur yang diprogram untuk saya";
 					break;
 				case '/nasional':
 					$message = getMessageKasusNasional();
@@ -100,10 +102,12 @@ $app->post('/', function ($request, $response)
 					endif;
 					break;
 				case '/help':
-					$message = '1. /halo -> Respon halo' . PHP_EOL;
+					$message = '1. /halo -> Perkenalan bot' . PHP_EOL;
 					$message .= '2. /nasional -> Kasus COVID-19 di Indonesia'  . PHP_EOL;
 					$message .= '3. /cari [nama_provinsi] -> Mencari kasus COVID-19 berdasarkan provinsi' . PHP_EOL;
-					$message .= 'Misal: /cari jawa timur';
+					$message .= 'Misal: /cari jawa timur' . PHP_EOL . PHP_EOL;
+					$message .= 'Kontak Pengembang:' . PHP_EOL;
+					$message .= 'WA: +62 878-5577-7360 (Amir)';
 					// $message .= '4. /available_provinsi -> List provinsi yang datanya tersedia'  . PHP_EOL;
 					// $message .= '5. /cari_provinsi [kode_provinsi] -> Cari provinsi berdasarkan kode provinsi (lihat di /available_provinsi)';
 					break;
