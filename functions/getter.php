@@ -38,7 +38,7 @@ function getMessageKasusNasional()
     $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL;
     $message .= "- Total Penambahan kasus: $selisihTotal" . PHP_EOL . PHP_EOL;
     $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
-    $message .= "Pembaruan terakhir hari ini jam " . date('H:i', $last_update);
+    $message .= "Pembaruan terakhir hari ini pukul " . date('H:i', $last_update);
 
     return $message;
 }
@@ -98,7 +98,40 @@ function getMessageKasusByProvince($kode_provinsi) {
     $last_update = strtotime($provinsiToday->updated_at);
 
     $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
-    $message .= "Pembaruan terakhir hari ini pada jam " . date('H:i', $last_update);
+    $message .= "Pembaruan terakhir hari ini pada pukul " . date('H:i', $last_update);
+
+    return $message;
+}
+
+function searchMessageByProvinces($keyword) {
+    $resultToday = searchTodayDataProvinces($keyword);
+    $resultYesterday = searchYesterdayDataProvinces($keyword);
+
+    $message = "";
+
+    $provinsiToday = (object) mysqli_fetch_assoc($resultToday);
+    $provinsiYesterday = (object) mysqli_fetch_assoc($resultYesterday);
+
+    // Hitung banyak penambahan kasus positif-sembuh-meninggal dari kemarin
+    $selisihPositif   = $provinsiToday->positif - $provinsiYesterday->positif;
+    $selisihSembuh    = $provinsiToday->sembuh - $provinsiYesterday->sembuh;
+    $selisihMeninggal = $provinsiToday->meninggal - $provinsiYesterday->meninggal;
+    $selisihDalamPerawatan = $provinsiToday->dalam_perawatan - $provinsiYesterday->dalam_perawatan;
+
+    // Hitung total kasus keseluruhan dari kemarin
+    $totalYesterday   = $provinsiYesterday->positif + $provinsiYesterday->sembuh + $provinsiYesterday->meninggal;
+    $totalToday       = $provinsiToday->positif + $provinsiToday->sembuh + $provinsiToday->meninggal;
+    $selisihTotal     = $totalToday - $totalYesterday;
+    $last_update = strtotime($provinsiToday->updated_at);
+    
+    $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . PHP_EOL . PHP_EOL;
+    $message .= "- Positif: $provinsiToday->positif (+$selisihPositif)" . PHP_EOL;
+    $message .= "- Sembuh: $provinsiToday->sembuh (+$selisihSembuh)" . PHP_EOL;
+    $message .= "- Meninggal: $provinsiToday->meninggal (+$selisihMeninggal)" . PHP_EOL;
+    $message .= "- Dalam perawatan: $provinsiToday->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL;
+    $message .= "- Total penambahan kasus: +$selisihTotal" . PHP_EOL . PHP_EOL;
+    $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
+    $message .= "Pembaruan terakhir hari ini pada pukul " . date('H:i', $last_update);
 
     return $message;
 }
@@ -154,9 +187,49 @@ function getMessageForKasusProvinsi()
     $last_update = strtotime($provinsiToday->updated_at);
 
     $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . "<br>" . "<br>";
-    $message .= "Pembaruan terakhir hari ini pada jam " . date('H:i', $last_update);
+    $message .= "Pembaruan terakhir hari ini pada pukul " . date('H:i', $last_update);
 
     return $message;
+}
+
+function searchTodayDataProvinces($keyword)
+{
+    global $connection;
+
+    $querySelectLastData = "SELECT 
+                                pengambilan_provinsi.updated_at,
+                                kode_provinsi,
+                                nama_provinsi,
+                                positif,
+                                sembuh,
+                                dalam_perawatan,
+                                meninggal
+                            FROM pengambilan_provinsi
+                            LEFT JOIN detail_pengambilan_provinsi
+                            ON pengambilan_provinsi.id = detail_pengambilan_provinsi.id_pengambilan_provinsi
+                            WHERE DATE(pengambilan_provinsi.created_at) = CURDATE() AND nama_provinsi LIKE '%$keyword%'";
+
+    return mysqli_query($connection, $querySelectLastData);
+}
+
+function searchYesterdayDataProvinces($keyword)
+{
+    global $connection;
+
+    $querySelectLastData = "SELECT 
+                                pengambilan_provinsi.updated_at,
+                                kode_provinsi,
+                                nama_provinsi,
+                                positif,
+                                sembuh,
+                                dalam_perawatan,
+                                meninggal
+                            FROM pengambilan_provinsi
+                            LEFT JOIN detail_pengambilan_provinsi
+                            ON pengambilan_provinsi.id = detail_pengambilan_provinsi.id_pengambilan_provinsi
+                            WHERE DATE(pengambilan_provinsi.created_at) = CURDATE()-1 AND nama_provinsi LIKE '%$keyword%'";
+
+    return mysqli_query($connection, $querySelectLastData);
 }
 
 /**

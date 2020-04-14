@@ -4,6 +4,7 @@ namespace CovidProv;
 
 require_once '/home/amirrpw/mirrbot.amirr.pw/database/config.php';
 
+date_default_timezone_set('Asia/Jakarta');
 /* ------------- Keperluan request Cron Job ------------- */
 
 /**
@@ -57,6 +58,19 @@ function getTodayData()
     return mysqli_query($connection, $querySelectLastData);
 }
 
+function getTodayData_Peng() {
+    global $connection;
+
+    $querySelectLastData = "SELECT 
+                                id,
+                                created_at,
+                                updated_at
+                            FROM pengambilan_provinsi
+                            WHERE DATE(pengambilan_provinsi.created_at) = CURDATE()";
+
+    return mysqli_query($connection, $querySelectLastData);
+}
+
 /**
  * Fungsi ini memasukan data baru ke dalam database
  * Dieksekusi ketika hari sudah berganti
@@ -104,7 +118,7 @@ function insertNewDataToday($dataApiProvinsi)
  * Param 1: List data provinsi dari database (result object)
  * Param 2: List data provinsi dari API
  */
-function isDBExpired($dataDBProvinsi, $dataApiProvinsi)
+function isDBExpired($dataDBProvinsi, $dataApiProvinsi, $dataDBProvinsi_Peng)
 {
     $current_time = time();
     $convert_current_time = date('Y:m:d H:i:s', $current_time);
@@ -115,7 +129,7 @@ function isDBExpired($dataDBProvinsi, $dataApiProvinsi)
             $provinsi['positif'] < $dataApiProvinsi[$i]->positif ||
             $provinsi['sembuh'] < $dataApiProvinsi[$i]->sembuh ||
             $provinsi['meninggal'] < $dataApiProvinsi[$i]->meninggal ||
-            $provinsi['updated_at'] < $convert_current_time
+            $dataDBProvinsi_Peng->updated_at < $convert_current_time
         ) {
             return true;
         }

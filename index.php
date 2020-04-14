@@ -75,12 +75,29 @@ $app->post('/', function ($request, $response)
 					$message = "Masukan kode provinsi yang anda cari";
 				endif;
 				break;
+			case '/cari':
+				if (isset($extractCommand[1])):
+					if (sizeof($extractCommand) == 3):
+						$hapus = array_shift($extractCommand);
+						$keyword = implode(" ", $extractCommand);
+					elseif (sizeof($extractCommand) == 4):
+						$hapus1 = array_shift($extractCommand);
+						$hapus2 = array_shift($extractCommand);
+						$keyword = implode(" ", $extractCommand);
+					endif;
+					$message = searchMessageByProvinces($keyword);
+				else:
+					$message = "Pastikan nama provinsi sudah benar";
+				endif;
+				break;
 			case '/help':
 				$message = '1. halo -> Respon halo' . PHP_EOL;
 				$message .= '2. /nasional -> Kasus COVID-19 di Indonesia'  . PHP_EOL;
 				$message .= '3. /provinsi -> List kasus seluruh provinsi' . PHP_EOL;
-				$message .= '4. /available_provinsi -> List provinsi yang datanya tersedia'  . PHP_EOL;
-				$message .= '5. /cari_provinsi [kode_provinsi] -> Cari provinsi berdasarkan kode provinsi (lihat di /available_provinsi)';
+				$message .= '4. /cari [nama_provinsi] -> mencari provinsi berdasarkan nama' . PHP_EOL;
+				$message .= 'Misal: /cari jawa timur' . PHP_EOL;
+				// $message .= '4. /available_provinsi -> List provinsi yang datanya tersedia'  . PHP_EOL;
+				// $message .= '5. /cari_provinsi [kode_provinsi] -> Cari provinsi berdasarkan kode provinsi (lihat di /available_provinsi)';
 				break;
 			default:
 				$message = "Maaf perintah tidak diketahui";
