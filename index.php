@@ -82,12 +82,19 @@ $app->post('/', function ($request, $response)
 						if (sizeof($extractCommand) == 3):
 							$hapus = array_shift($extractCommand);
 							$keyword = implode(" ", $extractCommand);
+						elseif (sizeof($extractCommand) == 2):
+							$keyword = $extractCommand[1];
 						elseif (sizeof($extractCommand) == 4):
 							$hapus1 = array_shift($extractCommand);
 							$hapus2 = array_shift($extractCommand);
 							$keyword = implode(" ", $extractCommand);
 						endif;
-						$message = searchMessageByProvinces($keyword);
+
+						if (searchMessageByProvinces($keyword) != null):
+							$message = searchMessageByProvinces($keyword);
+						else:
+							continue;
+						endif;
 					else:
 						$message = "Pastikan nama provinsi sudah benar";
 					endif;
