@@ -114,7 +114,7 @@ $app->post('/', function ($request, $response)
 				case '':
 					break;
 				default:
-					$message = "Maaf perintah tidak diketahui";
+					$message = "Maaf perintah tidak diketahui. Ketik '/help' untuk mengetahui fitur";
 					break;
 			}
 			$textMessageBuilder = new TextMessageBuilder($message);
