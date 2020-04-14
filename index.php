@@ -55,59 +55,63 @@ $app->post('/', function ($request, $response)
 		// Mendapatkan argumen dari perintah
 		$extractCommand = explode(' ', $userMessage);
 
-		switch (strtolower(trim($extractCommand[0]))) {
-			case 'halo':
-				$message = "Halo juga";
-				break;
-			case '/nasional':
-				$message = getMessageKasusNasional();
-				break;
-			case '/provinsi':
-				$message = getMessageForKasusProvinsi();
-				break;
-			case '/available_provinsi':
-				$message = getMessageAvailableProvinces();
-				break;
-			case '/cari_provinsi':
-				if (isset($extractCommand[1])):
-					$message = getMessageKasusByProvince($extractCommand[1]);
-				else:
-					$message = "Masukan kode provinsi yang anda cari";
-				endif;
-				break;
-			case '/cari':
-				if (isset($extractCommand[1])):
-					if (sizeof($extractCommand) == 3):
-						$hapus = array_shift($extractCommand);
-						$keyword = implode(" ", $extractCommand);
-					elseif (sizeof($extractCommand) == 4):
-						$hapus1 = array_shift($extractCommand);
-						$hapus2 = array_shift($extractCommand);
-						$keyword = implode(" ", $extractCommand);
+		$extractCommand_check = str_split($extractCommand[0]);
+		if ($extractCommand_check[0] == '/'):
+			switch (strtolower(trim($extractCommand[0]))) {
+				case 'halo':
+					$message = "Halo juga";
+					break;
+				case '/nasional':
+					$message = getMessageKasusNasional();
+					break;
+				case '/provinsi':
+					$message = getMessageForKasusProvinsi();
+					break;
+				case '/available_provinsi':
+					$message = getMessageAvailableProvinces();
+					break;
+				case '/cari_provinsi':
+					if (isset($extractCommand[1])):
+						$message = getMessageKasusByProvince($extractCommand[1]);
+					else:
+						$message = "Masukan kode provinsi yang anda cari";
 					endif;
-					$message = searchMessageByProvinces($keyword);
-				else:
-					$message = "Pastikan nama provinsi sudah benar";
-				endif;
-				break;
-			case '/help':
-				$message = '1. halo -> Respon halo' . PHP_EOL;
-				$message .= '2. /nasional -> Kasus COVID-19 di Indonesia'  . PHP_EOL;
-				$message .= '3. /cari [nama_provinsi] -> Mencari kasus COVID-19 berdasarkan provinsi' . PHP_EOL;
-				$message .= 'Misal: /cari jawa timur';
-				// $message .= '4. /available_provinsi -> List provinsi yang datanya tersedia'  . PHP_EOL;
-				// $message .= '5. /cari_provinsi [kode_provinsi] -> Cari provinsi berdasarkan kode provinsi (lihat di /available_provinsi)';
-				break;
-			case '':
-				break;
-			default:
-				$message = "Maaf perintah tidak diketahui";
-				break;
-		}
-
-		$textMessageBuilder = new TextMessageBuilder($message);
-		$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
-		return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+					break;
+				case '/cari':
+					if (isset($extractCommand[1])):
+						if (sizeof($extractCommand) == 3):
+							$hapus = array_shift($extractCommand);
+							$keyword = implode(" ", $extractCommand);
+						elseif (sizeof($extractCommand) == 4):
+							$hapus1 = array_shift($extractCommand);
+							$hapus2 = array_shift($extractCommand);
+							$keyword = implode(" ", $extractCommand);
+						endif;
+						$message = searchMessageByProvinces($keyword);
+					else:
+						$message = "Pastikan nama provinsi sudah benar";
+					endif;
+					break;
+				case '/help':
+					$message = '1. halo -> Respon halo' . PHP_EOL;
+					$message .= '2. /nasional -> Kasus COVID-19 di Indonesia'  . PHP_EOL;
+					$message .= '3. /cari [nama_provinsi] -> Mencari kasus COVID-19 berdasarkan provinsi' . PHP_EOL;
+					$message .= 'Misal: /cari jawa timur';
+					// $message .= '4. /available_provinsi -> List provinsi yang datanya tersedia'  . PHP_EOL;
+					// $message .= '5. /cari_provinsi [kode_provinsi] -> Cari provinsi berdasarkan kode provinsi (lihat di /available_provinsi)';
+					break;
+				case '':
+					break;
+				default:
+					$message = "Maaf perintah tidak diketahui";
+					break;
+			}
+			$textMessageBuilder = new TextMessageBuilder($message);
+			$result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+			return $result->getHTTPStatus() . ' ' . $result->getRawBody();
+		else:
+			continue;
+		endif;
 	}
 });
 
