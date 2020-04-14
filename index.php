@@ -55,7 +55,7 @@ $app->post('/', function ($request, $response)
 		// Mendapatkan argumen dari perintah
 		$extractCommand = explode(' ', $userMessage);
 
-		switch (strtolower($extractCommand[0])) {
+		switch (strtolower(trim($extractCommand[0]))) {
 			case 'halo':
 				$message = "Halo juga";
 				break;
