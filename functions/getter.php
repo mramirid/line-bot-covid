@@ -70,7 +70,7 @@ function getYesterdayDataNasional()
 /* ---------------------- Getter data provinsi ---------------------- */
 
 /**
- * Pencarian sebuah provinsi berdasarkan nama provinsi untuk
+ * Pencarian sebuah provinsi berdasarkan kode provinsi untuk
  * mendapatkan statistik kasus dari provinsi yang dicari
  */
 function getMessageKasusByProvince($kode_provinsi)
