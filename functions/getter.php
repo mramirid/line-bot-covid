@@ -30,15 +30,25 @@ function getMessageKasusNasional()
     $selisihTotal     = $totalToday - $totalYesterday;
 
     $last_update      = strtotime($resultLastDataId->updated_at);
-
-    $message  = 'Statistik kasus di Indonesia' . PHP_EOL . PHP_EOL;
-    $message .= "- Positif: $resultLastDataId->positif (+$selisihPositif)" . PHP_EOL;
-    $message .= "- Sembuh: $resultLastDataId->sembuh (+$selisihSembuh)" . PHP_EOL;
-    $message .= "- Meninggal: $resultLastDataId->meninggal (+$selisihMeninggal)" . PHP_EOL;
-    $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL;
-    $message .= "- Total Penambahan kasus: $selisihTotal" . PHP_EOL . PHP_EOL;
-    $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
-    $message .= "Pembaruan terakhir hari ini pukul " . date('H:i', $last_update);
+    if ($selisihTotal != 0):
+        $message  = 'Statistik kasus di Indonesia' . PHP_EOL . PHP_EOL;
+        $message .= "- Positif: $resultLastDataId->positif (+$selisihPositif)" . PHP_EOL;
+        $message .= "- Sembuh: $resultLastDataId->sembuh (+$selisihSembuh)" . PHP_EOL;
+        $message .= "- Meninggal: $resultLastDataId->meninggal (+$selisihMeninggal)" . PHP_EOL;
+        $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL;
+        $message .= "- Total Penambahan kasus: $selisihTotal" . PHP_EOL . PHP_EOL;
+        $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
+        $message .= "Pembaruan terakhir hari ini pukul " . date('H:i', $last_update);
+    else:
+        $message  = 'Statistik kasus di Indonesia' . PHP_EOL . PHP_EOL;
+        $message .= "- Positif: $resultLastDataId->positif" . PHP_EOL;
+        $message .= "- Sembuh: $resultLastDataId->sembuh" . PHP_EOL;
+        $message .= "- Meninggal: $resultLastDataId->meninggal" . PHP_EOL;
+        $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan" . PHP_EOL;
+        $message .= "- Total Penambahan kasus: (Belum ada pembaruan data)" . PHP_EOL . PHP_EOL;
+        $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
+        $message .= "Pembaruan terakhir hari ini pukul " . date('H:i', $last_update);
+    endif;
 
     return $message;
 }
@@ -84,13 +94,21 @@ function getMessageKasusByProvince($kode_provinsi) {
             $totalToday       = $provinsiToday->positif + $provinsiToday->sembuh + $provinsiToday->meninggal;
             $selisihTotal     = $totalToday - $totalYesterday;
             
-            $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . PHP_EOL . PHP_EOL;
-            $message .= "- Positif: $provinsiToday->positif (+$selisihPositif)" . PHP_EOL;
-            $message .= "- Sembuh: $provinsiToday->sembuh (+$selisihSembuh)" . PHP_EOL;
-            $message .= "- Meninggal: $provinsiToday->meninggal (+$selisihMeninggal)" . PHP_EOL;
-            $message .= "- Dalam perawatan: $provinsiToday->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL;
-            $message .= "- Total penambahan kasus: +$selisihTotal" . PHP_EOL . PHP_EOL;
-
+            if ($selisihTotal != 0):
+                $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . PHP_EOL . PHP_EOL;
+                $message .= "- Positif: $provinsiToday->positif (+$selisihPositif)" . PHP_EOL;
+                $message .= "- Sembuh: $provinsiToday->sembuh (+$selisihSembuh)" . PHP_EOL;
+                $message .= "- Meninggal: $provinsiToday->meninggal (+$selisihMeninggal)" . PHP_EOL;
+                $message .= "- Dalam perawatan: $provinsiToday->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL;
+                $message .= "- Total penambahan kasus: +$selisihTotal" . PHP_EOL . PHP_EOL;
+            else:
+                $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . PHP_EOL . PHP_EOL;
+                $message .= "- Positif: $provinsiToday->positif" . PHP_EOL;
+                $message .= "- Sembuh: $provinsiToday->sembuh" . PHP_EOL;
+                $message .= "- Meninggal: $provinsiToday->meninggal" . PHP_EOL;
+                $message .= "- Dalam perawatan: $provinsiToday->dalam_perawatan" . PHP_EOL;
+                $message .= "- Total penambahan kasus: (Belum ada pembaruan data)" . PHP_EOL . PHP_EOL;
+            endif;
             break;
         }
     }
@@ -124,12 +142,21 @@ function searchMessageByProvinces($keyword) {
     $selisihTotal     = $totalToday - $totalYesterday;
     $last_update = strtotime($provinsiToday->updated_at);
     
-    $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . PHP_EOL . PHP_EOL;
-    $message .= "- Positif: $provinsiToday->positif (+$selisihPositif)" . PHP_EOL;
-    $message .= "- Sembuh: $provinsiToday->sembuh (+$selisihSembuh)" . PHP_EOL;
-    $message .= "- Meninggal: $provinsiToday->meninggal (+$selisihMeninggal)" . PHP_EOL;
-    $message .= "- Dalam perawatan: $provinsiToday->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL;
-    $message .= "- Total penambahan kasus: +$selisihTotal" . PHP_EOL . PHP_EOL;
+    if ($selisihTotal != 0):
+        $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . PHP_EOL . PHP_EOL;
+        $message .= "- Positif: $provinsiToday->positif (+$selisihPositif)" . PHP_EOL;
+        $message .= "- Sembuh: $provinsiToday->sembuh (+$selisihSembuh)" . PHP_EOL;
+        $message .= "- Meninggal: $provinsiToday->meninggal (+$selisihMeninggal)" . PHP_EOL;
+        $message .= "- Dalam perawatan: $provinsiToday->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL;
+        $message .= "- Total penambahan kasus: +$selisihTotal" . PHP_EOL . PHP_EOL;
+    else:
+        $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . PHP_EOL . PHP_EOL;
+        $message .= "- Positif: $provinsiToday->positif" . PHP_EOL;
+        $message .= "- Sembuh: $provinsiToday->sembuh" . PHP_EOL;
+        $message .= "- Meninggal: $provinsiToday->meninggal" . PHP_EOL;
+        $message .= "- Dalam perawatan: $provinsiToday->dalam_perawatan" . PHP_EOL;
+        $message .= "- Total penambahan kasus: (Belum ada pembaruan data)" . PHP_EOL . PHP_EOL;
+    endif;
     $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
     $message .= "Pembaruan terakhir hari ini pada pukul " . date('H:i', $last_update);
 
