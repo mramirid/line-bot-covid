@@ -90,10 +90,10 @@ $app->post('/', function ($request, $response)
 							$keyword = implode(" ", $extractCommand);
 						endif;
 
-						if (searchMessageByProvinces($keyword) != null):
+						if (searchMessageByProvinces($keyword)):
 							$message = searchMessageByProvinces($keyword);
 						else:
-							continue;
+							$message = "Provinsi tidak ditemukan";
 						endif;
 					else:
 						$message = "Pastikan nama provinsi sudah benar";
