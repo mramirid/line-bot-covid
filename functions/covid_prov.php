@@ -58,7 +58,8 @@ function getTodayData()
     return mysqli_query($connection, $querySelectLastData);
 }
 
-function getTodayData_Peng() {
+function getTodayData_Peng()
+{
     global $connection;
 
     $querySelectLastData = "SELECT 

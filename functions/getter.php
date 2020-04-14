@@ -30,7 +30,7 @@ function getMessageKasusNasional()
     $selisihTotal     = $totalToday - $totalYesterday;
 
     $last_update      = strtotime($resultLastDataId->updated_at);
-    if ($selisihTotal != 0):
+    if ($selisihTotal != 0) :
         $message  = 'Statistik kasus di Indonesia' . PHP_EOL . PHP_EOL;
         $message .= "- Positif: $resultLastDataId->positif (+$selisihPositif)" . PHP_EOL;
         $message .= "- Sembuh: $resultLastDataId->sembuh (+$selisihSembuh)" . PHP_EOL;
@@ -38,7 +38,7 @@ function getMessageKasusNasional()
         $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL . PHP_EOL;
         $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
         $message .= "Pembaruan terakhir hari ini pukul " . date('H:i', $last_update);
-    else:
+    else :
         $message  = 'Statistik kasus di Indonesia' . PHP_EOL . PHP_EOL;
         $message .= "- Positif: $resultLastDataId->positif" . PHP_EOL;
         $message .= "- Sembuh: $resultLastDataId->sembuh" . PHP_EOL;
@@ -69,8 +69,12 @@ function getYesterdayDataNasional()
 
 /* ---------------------- Getter data provinsi ---------------------- */
 
-// Fitur ini tunda dulu
-function getMessageKasusByProvince($kode_provinsi) { 
+/**
+ * Pencarian sebuah provinsi berdasarkan nama provinsi untuk
+ * mendapatkan statistik kasus dari provinsi yang dicari
+ */
+function getMessageKasusByProvince($kode_provinsi)
+{
     $resultToday     = getTodayDataProvinces();
     $resultYesterday = getYesterdayDataProvinces();
 
@@ -91,20 +95,21 @@ function getMessageKasusByProvince($kode_provinsi) {
             $totalYesterday   = $provinsiYesterday->positif + $provinsiYesterday->sembuh + $provinsiYesterday->meninggal;
             $totalToday       = $provinsiToday->positif + $provinsiToday->sembuh + $provinsiToday->meninggal;
             $selisihTotal     = $totalToday - $totalYesterday;
-            
-            if ($selisihTotal != 0):
+
+            if ($selisihTotal != 0) :
                 $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . PHP_EOL . PHP_EOL;
                 $message .= "- Positif: $provinsiToday->positif (+$selisihPositif)" . PHP_EOL;
                 $message .= "- Sembuh: $provinsiToday->sembuh (+$selisihSembuh)" . PHP_EOL;
                 $message .= "- Meninggal: $provinsiToday->meninggal (+$selisihMeninggal)" . PHP_EOL;
                 $message .= "- Dalam perawatan: $provinsiToday->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL . PHP_EOL;
-            else:
+            else :
                 $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . PHP_EOL . PHP_EOL;
                 $message .= "- Positif: $provinsiToday->positif" . PHP_EOL;
                 $message .= "- Sembuh: $provinsiToday->sembuh" . PHP_EOL;
                 $message .= "- Meninggal: $provinsiToday->meninggal" . PHP_EOL;
                 $message .= "- Dalam perawatan: $provinsiToday->dalam_perawatan" . PHP_EOL . PHP_EOL;
             endif;
+
             break;
         }
     }
@@ -117,11 +122,16 @@ function getMessageKasusByProvince($kode_provinsi) {
     return $message;
 }
 
-function searchMessageByProvinces($keyword) {
+/**
+ * Pencarian sebuah provinsi berdasarkan nama provinsi untuk
+ * mendapatkan statistik kasus dari provinsi yang dicari
+ */
+function searchMessageByProvinces($keyword)
+{
     $resultToday = searchTodayDataProvinces($keyword);
     $resultYesterday = searchYesterdayDataProvinces($keyword);
 
-    if (mysqli_num_rows($resultToday) != 0):
+    if (mysqli_num_rows($resultToday) != 0) :
 
         $message = "";
 
@@ -139,36 +149,41 @@ function searchMessageByProvinces($keyword) {
         $totalToday       = $provinsiToday->positif + $provinsiToday->sembuh + $provinsiToday->meninggal;
         $selisihTotal     = $totalToday - $totalYesterday;
         $last_update = strtotime($provinsiToday->updated_at);
-        
-        if ($selisihTotal != 0):
+
+        if ($selisihTotal != 0) :
             $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . PHP_EOL . PHP_EOL;
             $message .= "- Positif: $provinsiToday->positif (+$selisihPositif)" . PHP_EOL;
             $message .= "- Sembuh: $provinsiToday->sembuh (+$selisihSembuh)" . PHP_EOL;
             $message .= "- Meninggal: $provinsiToday->meninggal (+$selisihMeninggal)" . PHP_EOL;
             $message .= "- Dalam perawatan: $provinsiToday->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL . PHP_EOL;
-        else:
+        else :
             $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . PHP_EOL . PHP_EOL;
             $message .= "- Positif: $provinsiToday->positif" . PHP_EOL;
             $message .= "- Sembuh: $provinsiToday->sembuh" . PHP_EOL;
             $message .= "- Meninggal: $provinsiToday->meninggal" . PHP_EOL . PHP_EOL;
             $message .= "- Dalam perawatan: $provinsiToday->dalam_perawatan" . PHP_EOL;
         endif;
+
         $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
         $message .= "Pembaruan terakhir hari ini pada pukul " . date('H:i', $last_update);
 
         return $message;
-    else:
+    else :
         return false;
     endif;
 }
 
-function getMessageAvailableProvinces() { 
+/**
+ * Mendapatkan list provinsi yang tersedia di sistem
+ */
+function getMessageAvailableProvinces()
+{
     $resultProvinces = getAvailableProvinces();
 
     $message  = "List provinsi yang tersedia" . PHP_EOL . PHP_EOL;
     $message .= "- [nama_provinsi] [kode_provinsi]" . PHP_EOL . PHP_EOL;
 
-    while ($provinsi = mysqli_fetch_assoc($resultProvinces)) { 
+    while ($provinsi = mysqli_fetch_assoc($resultProvinces)) {
         $message .= "- " . $provinsi['nama_provinsi'] . ' [' . $provinsi['kode_provinsi'] . ']' . PHP_EOL;
     }
 
@@ -201,7 +216,7 @@ function getMessageForKasusProvinsi()
         $totalYesterday   = $provinsiYesterday->positif + $provinsiYesterday->sembuh + $provinsiYesterday->meninggal;
         $totalToday       = $provinsiToday->positif + $provinsiToday->sembuh + $provinsiToday->meninggal;
         $selisihTotal     = $totalToday - $totalYesterday;
-        
+
         $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . "<br>" . "<br>";
         $message .= "- Positif: $provinsiToday->positif (+$selisihPositif)" . "<br>";
         $message .= "- Sembuh: $provinsiToday->sembuh (+$selisihSembuh)" . "<br>";
@@ -278,7 +293,7 @@ function getTodayDataProvinces()
                             ON pengambilan_provinsi.id = detail_pengambilan_provinsi.id_pengambilan_provinsi
                             WHERE DATE(pengambilan_provinsi.created_at) = CURDATE()";
 
-    return mysqli_query($connection, $querySelectLastData);    
+    return mysqli_query($connection, $querySelectLastData);
 }
 
 /**

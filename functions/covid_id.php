@@ -90,7 +90,7 @@ function updateTodayData($id, $dataApiNasional)
                                 dalam_perawatan = $dalamPerawatan,
                                 updated_at      = CURRENT_TIMESTAMP()
                             WHERE id = $id";
-                            
+
     mysqli_query($connection, $queryUpdateLastData);
 }
 
