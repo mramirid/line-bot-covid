@@ -107,7 +107,7 @@ $app->post('/', function ($request, $response)
 					$message .= '3. /cari [nama_provinsi] -> Mencari kasus COVID-19 berdasarkan provinsi' . PHP_EOL;
 					$message .= 'Misal: /cari jawa timur' . PHP_EOL . PHP_EOL;
 					$message .= 'Kontak Pengembang:' . PHP_EOL;
-					$message .= 'WA: +62 878-5577-7360 (Amir)';
+					$message .= 'WA: http://wa.me/6287855777360 (Amir)';
 					// $message .= '4. /available_provinsi -> List provinsi yang datanya tersedia'  . PHP_EOL;
 					// $message .= '5. /cari_provinsi [kode_provinsi] -> Cari provinsi berdasarkan kode provinsi (lihat di /available_provinsi)';
 					break;
