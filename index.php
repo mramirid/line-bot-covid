@@ -93,7 +93,7 @@ $app->post('/', function ($request, $response)
 			case '/help':
 				$message = '1. halo -> Respon halo' . PHP_EOL;
 				$message .= '2. /nasional -> Kasus COVID-19 di Indonesia'  . PHP_EOL;
-				$message .= '3. /cari [nama_provinsi] -> Mencari kasus provinsi berdasarkan nama' . PHP_EOL;
+				$message .= '3. /cari [nama_provinsi] -> Mencari kasus COVID-19 berdasarkan provinsi' . PHP_EOL;
 				$message .= 'Misal: /cari jawa timur';
 				// $message .= '4. /available_provinsi -> List provinsi yang datanya tersedia'  . PHP_EOL;
 				// $message .= '5. /cari_provinsi [kode_provinsi] -> Cari provinsi berdasarkan kode provinsi (lihat di /available_provinsi)';
