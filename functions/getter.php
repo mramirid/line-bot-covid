@@ -32,11 +32,11 @@ function getMessageKasusNasional()
     $last_update      = strtotime($resultLastDataId->updated_at);
 
     $message  = 'Statistik kasus di Indonesia' . PHP_EOL . PHP_EOL;
-    $message .= "Positif: $resultLastDataId->positif (+$selisihPositif)" . PHP_EOL;
-    $message .= "Sembuh: $resultLastDataId->sembuh (+$selisihSembuh)" . PHP_EOL;
-    $message .= "Meninggal: $resultLastDataId->meninggal (+$selisihMeninggal)" . PHP_EOL;
-    $message .= "Dalam Perawatan: $resultLastDataId->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL;
-    $message .= "Total Penambahan kasus: $selisihTotal" . PHP_EOL . PHP_EOL;
+    $message .= "-Positif: $resultLastDataId->positif (+$selisihPositif)" . PHP_EOL;
+    $message .= "-Sembuh: $resultLastDataId->sembuh (+$selisihSembuh)" . PHP_EOL;
+    $message .= "-Meninggal: $resultLastDataId->meninggal (+$selisihMeninggal)" . PHP_EOL;
+    $message .= "-Dalam Perawatan: $resultLastDataId->dalam_perawatan (+$selisihDalamPerawatan)" . PHP_EOL;
+    $message .= "-Total Penambahan kasus: $selisihTotal" . PHP_EOL . PHP_EOL;
     $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
     $message .= "Pembaruan terakhir hari ini jam " . date('H:i', $last_update);
 
