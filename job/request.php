@@ -8,7 +8,7 @@ date_default_timezone_set('Asia/Jakarta');
 /* ---------------------- Data Nasional ---------------------- */
 
 // Ambil data terakhir di tabel nasional
-$dataDBNasional    = CovidID\getTodayData();
+$dataDBNasional = CovidID\getTodayData();
 
 // Ambil statistik kasus di Indonesia
 $dataApiNasional = CovidID\fetchUpdateStatistik();
