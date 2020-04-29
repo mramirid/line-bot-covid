@@ -35,11 +35,7 @@ function getMessageKasusNasional()
         $message .= "- Positif: $resultLastDataId->positif (+" . abs($selisihPositif) . ")" . PHP_EOL;
         $message .= "- Sembuh: $resultLastDataId->sembuh (+" . abs($selisihSembuh) . ")" . PHP_EOL;
         $message .= "- Meninggal: $resultLastDataId->meninggal (+" . abs($selisihMeninggal) . ")" . PHP_EOL;
-        if ($selisihDalamPerawatan < 0) {
-            $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan (-" . $selisihDalamPerawatan . ")" . PHP_EOL . PHP_EOL;
-        } else {
-            $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan (+" . $selisihDalamPerawatan . ")" . PHP_EOL . PHP_EOL;
-        }
+            $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan (+" . abs($selisihDalamPerawatan) . ")" . PHP_EOL . PHP_EOL;
         
         $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
         $message .= "Pembaruan terakhir hari ini pukul " . date('H:i', $last_update);
@@ -160,11 +156,7 @@ function searchMessageByProvinces($keyword)
             $message .= "- Positif: $provinsiToday->positif (+" . abs($selisihPositif) . ")" . PHP_EOL;
             $message .= "- Sembuh: $provinsiToday->sembuh (+" . abs($selisihSembuh) . ")" . PHP_EOL;
             $message .= "- Meninggal: $provinsiToday->meninggal (+" . abs($selisihMeninggal) . ")" . PHP_EOL;
-            if ($selisihDalamPerawatan < 0) {
-                $message .= "- Dalam Perawatan: $provinsiToday->dalam_perawatan (-" . $selisihDalamPerawatan . ")" . PHP_EOL . PHP_EOL;
-            } else {
-                $message .= "- Dalam Perawatan: $provinsiToday->dalam_perawatan (+" . $selisihDalamPerawatan . ")" . PHP_EOL . PHP_EOL;
-            }
+                $message .= "- Dalam Perawatan: $provinsiToday->dalam_perawatan (+" . abs($selisihDalamPerawatan) . ")" . PHP_EOL . PHP_EOL;
         else :
             $message .= "Statistik kasus di $provinsiToday->nama_provinsi" . PHP_EOL . PHP_EOL;
             $message .= "- Positif: $provinsiToday->positif" . PHP_EOL;
