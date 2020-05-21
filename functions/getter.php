@@ -18,6 +18,9 @@ function getMessageKasusNasional()
     // Data kemarin
     $resultYesterdayData = getYesterdayDataNasional();
 
+    // Data kemarin lusa
+    $resultTwoDaysAgo   = getTwoDaysAgo();
+
     // Hitung banyak penambahan kasus positif-sembuh-meninggal dari kemarin
     $selisihPositif   = $resultLastDataId->positif - $resultYesterdayData->positif;
     $selisihSembuh    = $resultLastDataId->sembuh - $resultYesterdayData->sembuh;
@@ -28,6 +31,9 @@ function getMessageKasusNasional()
     $totalYesterday   = $resultYesterdayData->positif + $resultYesterdayData->sembuh + $resultYesterdayData->meninggal;
     $totalToday       = $resultLastDataId->positif + $resultLastDataId->sembuh + $resultLastDataId->meninggal;
     $selisihTotal     = $totalToday - $totalYesterday;
+    $pastData         = $resultTwoDaysAgo->total;
+    $presentData      = $resultLastDataId->positif + $resultLastDataId->meninggal;
+    $exponentialGrowth = ($presentData-$pastData)/$pastData;
 
     $last_update      = strtotime($resultLastDataId->updated_at);
     if ($selisihTotal != 0) :
@@ -35,7 +41,8 @@ function getMessageKasusNasional()
         $message .= "- Positif: $resultLastDataId->positif (+" . abs($selisihPositif) . ")" . PHP_EOL;
         $message .= "- Sembuh: $resultLastDataId->sembuh (+" . abs($selisihSembuh) . ")" . PHP_EOL;
         $message .= "- Meninggal: $resultLastDataId->meninggal (+" . abs($selisihMeninggal) . ")" . PHP_EOL;
-            $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan (+" . abs($selisihDalamPerawatan) . ")" . PHP_EOL . PHP_EOL;
+        $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan (+" . abs($selisihDalamPerawatan) . ")" . PHP_EOL;
+        $message .= "- Pertumbuhan Eksponensial: $exponentialGrowth" . PHP_EOL . PHP_EOL;
         
         $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
         $message .= "Pembaruan terakhir hari ini pukul " . date('H:i', $last_update);
@@ -44,7 +51,8 @@ function getMessageKasusNasional()
         $message .= "- Positif: $resultLastDataId->positif" . PHP_EOL;
         $message .= "- Sembuh: $resultLastDataId->sembuh" . PHP_EOL;
         $message .= "- Meninggal: $resultLastDataId->meninggal" . PHP_EOL;
-        $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan" . PHP_EOL . PHP_EOL;
+        $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan" . PHP_EOL;
+        $message .= "- Pertumbuhan Eksponensial: $exponentialGrowth" . PHP_EOL . PHP_EOL;
         $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
         $message .= "Pembaruan terakhir hari ini pukul " . date('H:i', $last_update);
     endif;
@@ -62,6 +70,19 @@ function getYesterdayDataNasional()
 
     $querySelectYesterdayData   = "SELECT * FROM nasional WHERE DATE(created_at) = CURDATE()-1 LIMIT 1";
     $resultQuery                = mysqli_query($connection, $querySelectYesterdayData);
+
+    return (object) mysqli_fetch_assoc($resultQuery);
+}
+
+/** 
+ * Mendapatkan data 2 hari yang lalu
+ */
+function getTwoDaysAgo()
+{
+    global $connection;
+
+    $querySelectTwoDaysData   = "SELECT positif+meninggal as total FROM nasional WHERE DATE(created_at) = CURDATE()-1 LIMIT 1";
+    $resultQuery                = mysqli_query($connection, $querySelectTwoDaysData);
 
     return (object) mysqli_fetch_assoc($resultQuery);
 }

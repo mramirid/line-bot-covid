@@ -33,29 +33,8 @@ function getTodayData()
     $querySelectLastData     = "SELECT * FROM nasional WHERE DATE(created_at) = CURDATE() LIMIT 1";
     $resultQuery             = mysqli_query($connection, $querySelectLastData);
     $todayData               = mysqli_fetch_assoc($resultQuery);
-    $todayData["exp_growth"] = getTodayGrowth();
        
     return (object) $todayData;
-}
-
-function getTodayGrowth()
-{
-    global $connection;
-    
-    // Kalo misalnya positif dan meninggal itu tidak intersekt
-    $queryGetInfectedFromTheLastTwoDays  = "SELECT sub.positif + sub.meninggal FROM
-                                            ( SELECT * FROM nasional ORDER BY created_at DESC LIMIT 2 ) as sub";      
-    $resultQuery                         =  mysqli_query($connection, $queryGetPositivesFromTheLastThreeDays);
-    $infectedData                        =  mysqli_fetch_array($resultQuery);
-    
-    // Jika exponential growth merupakan integer negative - Good news
-    // Jika exponential growth merupakan integer positif - Meh news
-    // Referensi https://pages.uoregon.edu/rgp/PPPM613/class8a.htm
-    // Index 0 dari $queryData seharusnya data hari ini
-    // Index 1 dari $queryData seharusnya data hari kemarin
-    $exponentialGrowth = ($queryData[0]-$queryData[1])/$queryData[1];
-
-    return $exponentialGrowth;
 }
 
 
