@@ -33,7 +33,7 @@ function getMessageKasusNasional()
     $selisihTotal     = $totalToday - $totalYesterday;
     $pastData         = $resultTwoDaysAgo->total;
     $presentData      = $resultLastDataId->positif + $resultLastDataId->meninggal;
-    $exponentialGrowth = 100*(($presentData-$pastData)/$pastData);
+    $exponentialGrowth = number_format(100*(($presentData-$pastData)/$pastData), 2);
 
     $last_update      = strtotime($resultLastDataId->updated_at);
     if ($selisihTotal != 0) :
@@ -42,7 +42,7 @@ function getMessageKasusNasional()
         $message .= "- Sembuh: $resultLastDataId->sembuh (+" . abs($selisihSembuh) . ")" . PHP_EOL;
         $message .= "- Meninggal: $resultLastDataId->meninggal (+" . abs($selisihMeninggal) . ")" . PHP_EOL;
         $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan (+" . abs($selisihDalamPerawatan) . ")" . PHP_EOL;
-        $message .= "- Pertumbuhan Eksponensial: $exponentialGrowth" . PHP_EOL . PHP_EOL;
+        $message .= "- Pertumbuhan Eksponensial: $exponentialGrowth"."%" . PHP_EOL . PHP_EOL;
         
         $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
         $message .= "Pembaruan terakhir hari ini pukul " . date('H:i', $last_update);
@@ -52,7 +52,7 @@ function getMessageKasusNasional()
         $message .= "- Sembuh: $resultLastDataId->sembuh" . PHP_EOL;
         $message .= "- Meninggal: $resultLastDataId->meninggal" . PHP_EOL;
         $message .= "- Dalam Perawatan: $resultLastDataId->dalam_perawatan" . PHP_EOL;
-        $message .= "- Pertumbuhan Eksponensial: $exponentialGrowth" . PHP_EOL . PHP_EOL;
+        $message .= "- Pertumbuhan Eksponensial: $exponentialGrowth"."%" . PHP_EOL . PHP_EOL;
         $message .= "Tetap jaga kesehatan dan apabila memungkinkan #DirumahAja" . PHP_EOL . PHP_EOL;
         $message .= "Pembaruan terakhir hari ini pukul " . date('H:i', $last_update);
     endif;
