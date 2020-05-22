@@ -33,7 +33,7 @@ function getMessageKasusNasional()
     $selisihTotal     = $totalToday - $totalYesterday;
     $pastData         = $resultTwoDaysAgo->total;
     $presentData      = $resultLastDataId->positif + $resultLastDataId->meninggal;
-    $exponentialGrowth = ($presentData-$pastData)/$pastData;
+    $exponentialGrowth = 100*(($presentData-$pastData)/$pastData);
 
     $last_update      = strtotime($resultLastDataId->updated_at);
     if ($selisihTotal != 0) :
