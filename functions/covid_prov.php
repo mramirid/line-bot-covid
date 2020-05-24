@@ -36,18 +36,15 @@ function fetchUpdateStatistik()
 
 /**
  * Fungsi ini mengambil data statistik terakhir (hari ini) dari database
+ * 
+ * Tenang, urutan data diambil secara terurut menyesuaikan dengan urutan response dari API 
+ * sehingga kalo digunakan untuk perbandingan secara terurut dengan data API masih aman2 saja
  */
 function getTodayData()
 {
     global $connection;
 
     $querySelectLastData = "SELECT 
-                                pengambilan_provinsi.id AS id_pengambilan,
-                                created_at,
-                                updated_at,
-                                detail_pengambilan_provinsi.id AS id_detail_pengambilan,
-                                kode_provinsi,
-                                nama_provinsi,
                                 positif,
                                 sembuh,
                                 dalam_perawatan,
@@ -55,20 +52,6 @@ function getTodayData()
                             FROM pengambilan_provinsi
                             LEFT JOIN detail_pengambilan_provinsi
                             ON pengambilan_provinsi.id = detail_pengambilan_provinsi.id_pengambilan_provinsi
-                            WHERE DATE(pengambilan_provinsi.created_at) = CURDATE()";
-
-    return mysqli_query($connection, $querySelectLastData);
-}
-
-function getTodayData_Peng()
-{
-    global $connection;
-
-    $querySelectLastData = "SELECT 
-                                id,
-                                created_at,
-                                updated_at
-                            FROM pengambilan_provinsi
                             WHERE DATE(pengambilan_provinsi.created_at) = CURDATE()";
 
     return mysqli_query($connection, $querySelectLastData);
@@ -121,18 +104,14 @@ function insertNewDataToday($dataApiProvinsi)
  * Param 1: List data provinsi dari database (result object)
  * Param 2: List data provinsi dari API
  */
-function isDBExpired($dataDBProvinsi, $dataApiProvinsi, $dataDBProvinsi_Peng)
+function isDBExpired($dataDBProvinsi, $dataApiProvinsi)
 {
-    $current_time = time();
-    $convert_current_time = date('Y:m:d H:i:s', $current_time);
-
     $i = 0;
     while ($provinsi = mysqli_fetch_assoc($dataDBProvinsi)) {
         if (
             $provinsi['positif'] < $dataApiProvinsi[$i]->positif ||
             $provinsi['sembuh'] < $dataApiProvinsi[$i]->sembuh ||
-            $provinsi['meninggal'] < $dataApiProvinsi[$i]->meninggal ||
-            $dataDBProvinsi_Peng->updated_at < $convert_current_time
+            $provinsi['meninggal'] < $dataApiProvinsi[$i]->meninggal
         ) {
             return true;
         }

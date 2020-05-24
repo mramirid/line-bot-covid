@@ -31,12 +31,9 @@ $dataDBProvinsi = CovidProv\getTodayData();
 // Ambil statistik kasus di tiap provinsi
 $dataApiProvinsi = CovidProv\fetchUpdateStatistik();
 
-// Ambil data terakhir di tabel pengambilan_provinsi
-$dataDBProvinsi_Peng = CovidProv\getTodayData_Peng();
-
 if ($dataDBProvinsi->num_rows == 0) :
     CovidProv\insertNewDataToday($dataApiProvinsi);
-elseif (\CovidProv\isDBExpired($dataDBProvinsi, $dataApiProvinsi, $dataDBProvinsi_Peng)) :
+elseif (\CovidProv\isDBExpired($dataDBProvinsi, $dataApiProvinsi)) :
     CovidProv\updateTodayData($dataApiProvinsi);
 endif;
 
