@@ -106,7 +106,7 @@ $app->post('/', function ($request, $response) {
 				$message .= '2. /nasional -> Kasus COVID-19 di Indonesia'  . PHP_EOL;
 				$message .= '3. /cari [nama_provinsi] -> Mencari kasus COVID-19 berdasarkan provinsi' . PHP_EOL;
 				$message .= 'Misal: /cari jawa timur' . PHP_EOL . PHP_EOL;
-				$message .= 'Versi 1.2 - 24/05/2020 14.21 (Performance improvement)';
+				$message .= 'Versi 1.3 - 31/05/2020 22.16 (Search Province improvement)';
 				// $message .= '4. /available_provinsi -> List provinsi yang datanya tersedia'  . PHP_EOL;
 				// $message .= '5. /cari_provinsi [kode_provinsi] -> Cari provinsi berdasarkan kode provinsi (lihat di /available_provinsi)';
 				break;
