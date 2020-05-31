@@ -82,13 +82,13 @@ $app->post('/', function ($request, $response) {
 				if (isset($extractCommand[1])) :
 					if (sizeof($extractCommand) == 3) :
 						array_shift($extractCommand);
-						$keyword = implode(" ", $extractCommand);
+						$keyword = trim(implode(" ", $extractCommand));
 					elseif (sizeof($extractCommand) == 2) :
 						$keyword = $extractCommand[1];
 					elseif (sizeof($extractCommand) == 4) :
 						array_shift($extractCommand);
 						array_shift($extractCommand);
-						$keyword = implode(" ", $extractCommand);
+						$keyword = trim(implode(" ", $extractCommand));
 					endif;
 
 					if (searchMessageByProvinces($keyword)) :
